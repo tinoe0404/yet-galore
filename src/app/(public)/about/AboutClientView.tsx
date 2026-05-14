@@ -1,32 +1,35 @@
 'use client';
-import React from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { fadeUp } from '@/lib/animations';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { fadeUp, slideInLeft, EASE_SMOOTH } from '@/lib/animations';
 import { DisplayText, BodyText, Heading } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
 
 export function AboutClientView() {
   const router = useRouter();
+  const storyImageRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: storyImageRef,
+    offset: ['start end', 'end start'],
+  });
+  const storyImageY = useTransform(scrollYProgress, [0, 1], [20, -20]);
 
   return (
     <div className="w-full bg-background min-h-screen">
-      {/* 1. Hero */}
+      {/* 1. Hero — absolute fill inside h-[70vh] wrapper */}
       <section className="relative w-full h-[70vh] bg-beige flex items-center justify-center overflow-hidden">
-        <Image 
+        <img 
           src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2000&auto=format&fit=crop" 
           alt="Yet Galore Editorial" 
-          fill 
-          priority
-          unoptimized
-          className="object-cover"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/20" />
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 1, ease: EASE_SMOOTH }}
           className="relative z-10 text-center"
         >
           <DisplayText as="h1" className="text-cream text-5xl md:text-7xl italic">Our Story</DisplayText>
@@ -48,14 +51,14 @@ export function AboutClientView() {
         </motion.div>
       </section>
 
-      {/* 3. Story Section */}
+      {/* 3. Story Section — slideInLeft text, parallax image */}
       <section className="container-wide px-6 lg:px-12 py-12 md:py-24">
         <div className="flex flex-col md:flex-row items-center gap-16 lg:gap-24">
           <motion.div 
             initial="initial"
             whileInView="animate"
             viewport={{ once: true, margin: '-80px' }}
-            variants={fadeUp}
+            variants={slideInLeft}
             className="w-full md:w-[55%] space-y-8"
           >
             <Heading>The Origin</Heading>
@@ -72,20 +75,24 @@ export function AboutClientView() {
             </div>
           </motion.div>
 
+          {/* Story image — aspect-[3/4] wrapper with parallax */}
           <motion.div 
-            initial="initial"
-            whileInView="animate"
+            ref={storyImageRef}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: '-80px' }}
-            variants={fadeUp}
+            transition={{ duration: 0.8, ease: EASE_SMOOTH }}
             className="w-full md:w-[45%] aspect-[3/4] relative bg-beige overflow-hidden"
           >
-            <Image 
-              src="https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000&auto=format&fit=crop" 
-              alt="Craftsmanship Details" 
-              fill 
-              unoptimized
-              className="object-cover"
-            />
+            <motion.div style={{ y: storyImageY }} className="absolute inset-0">
+              <img 
+                src="https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000&auto=format&fit=crop" 
+                alt="Craftsmanship Details" 
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -94,44 +101,25 @@ export function AboutClientView() {
       <section className="bg-charcoal text-cream py-24 px-6 lg:px-12">
         <div className="container-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 divide-y md:divide-y-0 md:divide-x divide-cream/20">
-            <motion.div 
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, margin: '-80px' }}
-              variants={fadeUp}
-              className="pt-8 md:pt-0 md:px-8 first:px-0 text-center md:text-left"
-            >
-              <h3 className="font-display text-3xl mb-4">Quality</h3>
-              <p className="font-sans text-sm tracking-wide text-cream/70 leading-relaxed">
-                We utilize only the finest materials, ensuring every garment endures through seasons and generations.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, margin: '-80px' }}
-              variants={fadeUp}
-              className="pt-8 md:pt-0 md:px-8 text-center md:text-left"
-            >
-              <h3 className="font-display text-3xl mb-4">Restraint</h3>
-              <p className="font-sans text-sm tracking-wide text-cream/70 leading-relaxed">
-                Our designs strip away the unnecessary, leaving only silhouettes of profound elegance and purpose.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true, margin: '-80px' }}
-              variants={fadeUp}
-              className="pt-8 md:pt-0 md:px-8 last:pr-0 text-center md:text-left"
-            >
-              <h3 className="font-display text-3xl mb-4">Intention</h3>
-              <p className="font-sans text-sm tracking-wide text-cream/70 leading-relaxed">
-                Every detail is considered. There are no accidents in our curation, only deliberate aesthetic choices.
-              </p>
-            </motion.div>
+            {[
+              { title: 'Quality', desc: 'We utilize only the finest materials, ensuring every garment endures through seasons and generations.' },
+              { title: 'Restraint', desc: 'Our designs strip away the unnecessary, leaving only silhouettes of profound elegance and purpose.' },
+              { title: 'Intention', desc: 'Every detail is considered. There are no accidents in our curation, only deliberate aesthetic choices.' },
+            ].map((value, idx) => (
+              <motion.div 
+                key={value.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, ease: EASE_SMOOTH, delay: idx * 0.12 }}
+                className="pt-8 md:pt-0 md:px-8 first:px-0 text-center md:text-left"
+              >
+                <h3 className="font-display text-3xl mb-4">{value.title}</h3>
+                <p className="font-sans text-sm tracking-wide text-cream/70 leading-relaxed">
+                  {value.desc}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

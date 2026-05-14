@@ -1,15 +1,24 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Heading, BodyText } from '@/components/ui/Typography';
 import { submitEnquiry } from '@/actions/enquiry';
+import { modalBackdrop, modalContentDesktop, modalContentMobile } from '@/lib/animations';
 
 export function EnquiryModal({ isOpen, onClose, product }: { isOpen: boolean; onClose: () => void; product: any }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,23 +41,28 @@ export function EnquiryModal({ isOpen, onClose, product }: { isOpen: boolean; on
     }
   };
 
+  const contentVariants = isMobile ? modalContentMobile : modalContentDesktop;
+
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/40">
+        <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center">
+          {/* Backdrop */}
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={modalBackdrop}
+            initial="initial"
+            animate="animate"
+            exit="exit"
             onClick={onClose}
-            className="absolute inset-0"
+            className="absolute inset-0 bg-black/40"
           />
+          {/* Content */}
           <motion.div
-            initial={{ y: '100%', scale: 1 }}
-            animate={{ y: 0, scale: 1 }}
-            exit={{ y: '100%', scale: 1 }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="relative w-full max-w-lg bg-cream p-8 md:p-12 shadow-xl md:rounded-none max-h-[90vh] overflow-y-auto"
+            variants={contentVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="relative w-full max-w-lg bg-cream p-8 md:p-12 shadow-xl max-h-[90vh] overflow-y-auto"
           >
             <button onClick={onClose} className="absolute top-6 right-6 text-black hover:opacity-70">
               <X className="w-6 h-6" strokeWidth={1} />

@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { lightboxBackdrop, lightboxContent } from '@/lib/animations';
 import { X } from 'lucide-react';
 
 interface ProductGalleryProps {
@@ -27,7 +27,7 @@ export function ProductGallery({ images }: ProductGalleryProps) {
 
   return (
     <div className="w-full flex flex-col gap-4">
-      {/* Primary Image */}
+      {/* Primary Image — aspect-[4/5] wrapper */}
       <div 
         className="relative w-full aspect-[4/5] bg-beige cursor-zoom-in overflow-hidden"
         onClick={() => setIsLightboxOpen(true)}
@@ -38,17 +38,14 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
             className="absolute inset-0"
           >
-            <Image
+            <img
               src={getImageUrl(activeImage)}
               alt={activeImage.altText || 'Product Image'}
-              fill
-              priority
-              unoptimized
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 60vw"
+              decoding="async"
+              className="w-full h-full object-cover"
             />
           </motion.div>
         </AnimatePresence>
@@ -72,23 +69,23 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             ))}
           </div>
 
-          {/* Desktop Thumbnails */}
+          {/* Desktop Thumbnails — fixed 80x80 aspect-square */}
           <div className="hidden md:flex gap-4 overflow-x-auto pb-2 snap-x">
             {images.map((img, idx) => (
               <button
                 key={img.id}
                 onClick={() => setActiveIndex(idx)}
                 className={cn(
-                  "relative flex-shrink-0 w-20 h-20 bg-beige transition-all border-2 snap-start",
+                  "relative flex-shrink-0 w-20 h-20 bg-beige overflow-hidden transition-all border-2 snap-start",
                   activeIndex === idx ? "border-black" : "border-transparent hover:border-black/30"
                 )}
               >
-                <Image
+                <img
                   src={getThumbnailUrl(img)}
                   alt="Thumbnail"
-                  fill
-                  unoptimized
-                  className="object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
                 />
               </button>
             ))}
@@ -100,9 +97,10 @@ export function ProductGallery({ images }: ProductGalleryProps) {
       <AnimatePresence>
         {isLightboxOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            variants={lightboxBackdrop}
+            initial="initial"
+            animate="animate"
+            exit="exit"
             className="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center p-4 md:p-12"
           >
             <button 
@@ -111,16 +109,20 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             >
               <X className="w-8 h-8" strokeWidth={1} />
             </button>
-            <div className="relative w-full h-full max-w-5xl max-h-[90vh]">
-              <Image
+            <motion.div
+              variants={lightboxContent}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="relative w-full h-full max-w-5xl max-h-[90vh] flex items-center justify-center"
+            >
+              <img
                 src={getImageUrl(activeImage)}
                 alt={activeImage.altText || 'Product Image Full'}
-                fill
-                unoptimized
-                className="object-contain"
-                sizes="100vw"
+                decoding="async"
+                className="max-w-full max-h-full object-contain"
               />
-            </div>
+            </motion.div>
             
             {/* Lightbox Controls */}
             {images.length > 1 && (

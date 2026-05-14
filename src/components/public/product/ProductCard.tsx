@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface ProductCardProps {
@@ -20,14 +19,12 @@ export function ProductCard({ product, variant = 'default', priority = false }: 
         "relative w-full overflow-hidden bg-beige border border-transparent transition-colors duration-300 group-hover:border-border",
         variant === 'featured' ? "aspect-[3/4]" : "aspect-square"
       )}>
-        <Image
+        <img
           src={imageUrl}
           alt={firstImage?.altText || product.name}
-          fill
-          priority={priority}
-          unoptimized
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
         />
         {/* Overlay Label for hover */}
         <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/40 to-transparent opacity-0 translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">

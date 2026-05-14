@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { staggerContainer, fadeUp } from '@/lib/animations';
+import { mobileMenuOverlay, mobileMenuStagger, mobileMenuItem } from '@/lib/animations';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -54,21 +54,21 @@ export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
       {isOpen && (
         <motion.div
           ref={menuRef}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          variants={mobileMenuOverlay}
+          initial="initial"
+          animate="animate"
+          exit="exit"
           className="fixed inset-0 z-40 bg-cream pt-24 px-6 flex flex-col"
         >
           <motion.nav 
-            variants={staggerContainer}
+            variants={mobileMenuStagger}
             initial="initial"
             animate="animate"
-            exit="initial"
+            exit="exit"
             className="flex flex-col gap-6 mt-12"
           >
             {categories.map((cat) => (
-              <motion.div key={cat.slug} variants={fadeUp}>
+              <motion.div key={cat.slug} variants={mobileMenuItem}>
                 <Link 
                   href={`/catalogue/${cat.slug}`}
                   className="font-display text-4xl tracking-tight text-black"
@@ -78,7 +78,7 @@ export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
                 </Link>
               </motion.div>
             ))}
-            <motion.div variants={fadeUp} className="mt-8 pt-8 border-t border-border">
+            <motion.div variants={mobileMenuItem} className="mt-8 pt-8 border-t border-border">
               <Link 
                 href="/contact" 
                 className="font-display text-4xl tracking-tight text-black"

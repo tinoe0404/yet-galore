@@ -1,8 +1,10 @@
 'use client';
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { createCategory, updateCategory, deleteCategory } from '@/features/categories/actions';
+import { modalBackdrop, adminModal } from '@/lib/animations';
 
 export function CategoriesClientView({ initialCategories }: { initialCategories: any[] }) {
   const [isCreating, setIsCreating] = useState(false);
@@ -37,32 +39,50 @@ export function CategoriesClientView({ initialCategories }: { initialCategories:
         <Button onClick={() => setIsCreating(true)}>+ New Category</Button>
       </div>
 
-      {isCreating && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <form onSubmit={handleCreate} className="bg-white p-8 w-full max-w-md space-y-6 shadow-xl">
-            <h2 className="font-display text-2xl">Create Category</h2>
-            <Input 
-              label="Name" 
-              value={newName} 
-              onChange={e => setNewName(e.target.value)} 
-              required 
+      {/* Modal with AnimatePresence */}
+      <AnimatePresence>
+        {isCreating && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              variants={modalBackdrop}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              onClick={() => setIsCreating(false)}
+              className="absolute inset-0 bg-black/50"
             />
-            <div className="space-y-1">
-              <label className="font-sans text-xs uppercase tracking-widest text-black/60">Description (Optional)</label>
-              <textarea 
-                className="w-full border-b border-black/20 focus:border-black focus:outline-none py-2 text-sm bg-transparent resize-none"
-                value={newDesc}
-                onChange={e => setNewDesc(e.target.value)}
-                rows={3}
+            <motion.form
+              variants={adminModal}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              onSubmit={handleCreate}
+              className="relative bg-white p-8 w-full max-w-md space-y-6 shadow-xl"
+            >
+              <h2 className="font-display text-2xl">Create Category</h2>
+              <Input 
+                label="Name" 
+                value={newName} 
+                onChange={e => setNewName(e.target.value)} 
+                required 
               />
-            </div>
-            <div className="flex gap-4 pt-4">
-              <Button type="button" variant="outline" className="flex-1" onClick={() => setIsCreating(false)}>Cancel</Button>
-              <Button type="submit" variant="primary" className="flex-1">Create</Button>
-            </div>
-          </form>
-        </div>
-      )}
+              <div className="space-y-1">
+                <label className="font-sans text-xs uppercase tracking-widest text-black/60">Description (Optional)</label>
+                <textarea 
+                  className="w-full border-b border-black/20 focus:border-black focus:outline-none py-2 text-sm bg-transparent resize-none"
+                  value={newDesc}
+                  onChange={e => setNewDesc(e.target.value)}
+                  rows={3}
+                />
+              </div>
+              <div className="flex gap-4 pt-4">
+                <Button type="button" variant="outline" className="flex-1" onClick={() => setIsCreating(false)}>Cancel</Button>
+                <Button type="submit" variant="primary" className="flex-1">Create</Button>
+              </div>
+            </motion.form>
+          </div>
+        )}
+      </AnimatePresence>
 
       <div className="bg-white border border-border overflow-hidden">
         <table className="w-full text-left font-sans text-sm">

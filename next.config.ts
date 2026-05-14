@@ -1,13 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'pub-xxxxxxxxxxxxxxxx.r2.dev' },
-      { protocol: 'https', hostname: 'images.unsplash.com' }
-    ],
-    formats: ['image/avif', 'image/webp'],
-  }
+  // No Next.js Image optimization needed — all images are pre-optimized
+  // WebP served directly from Cloudflare R2 via plain <img> tags.
 };
 
 export default nextConfig;
