@@ -48,29 +48,8 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
       <header className={navClasses}>
         <div className="container-wide h-20 flex items-center justify-between relative">
           
-          {/* Desktop Left: Categories */}
-          <nav className="hidden md:flex items-center gap-8 flex-1">
-            {categories.map(cat => (
-              <Link 
-                key={cat.slug} 
-                href={`/catalogue/${cat.slug}`}
-                className={cn(
-                  "font-sans text-sm tracking-wider uppercase transition-colors hover:text-black/70",
-                  pathname === `/catalogue/${cat.slug}` && "underline underline-offset-4"
-                )}
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Center: Logo — absolutely centered */}
-          <div className="absolute left-1/2 -translate-x-1/2 z-50">
-            <Logo variant="dark" />
-          </div>
-
-          {/* Desktop Right: Social & Enquire */}
-          <div className="hidden md:flex items-center gap-6 flex-1 justify-end">
+          {/* Desktop Left: Social & Enquire */}
+          <div className="hidden md:flex items-center gap-6 flex-1">
             <a href="https://www.instagram.com/yet.galore?igsh=MWl4bTFoMTdwbDA4bw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="hover:opacity-70 transition-opacity" aria-label="Instagram">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -96,6 +75,27 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
               Enquire
             </Link>
           </div>
+
+          {/* Center: Logo — absolutely centered */}
+          <div className="absolute left-1/2 -translate-x-1/2 z-50">
+            <Logo variant="dark" />
+          </div>
+
+          {/* Desktop Right: Categories */}
+          <nav className="hidden md:flex items-center gap-8 flex-1 justify-end">
+            {categories.map(cat => (
+              <Link 
+                key={cat.slug} 
+                href={`/catalogue/${cat.slug}`}
+                className={cn(
+                  "font-sans text-sm tracking-wider uppercase transition-colors hover:text-black/70",
+                  pathname === `/catalogue/${cat.slug}` && "underline underline-offset-4"
+                )}
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </nav>
 
           {/* Mobile Right: Hamburger */}
           <div className="flex md:hidden flex-1 justify-end relative z-50">
