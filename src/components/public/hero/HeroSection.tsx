@@ -18,7 +18,7 @@ export function HeroSection({ headline, subheadline, ctaLabel, ctaHref, image }:
           src={image} 
           alt="Hero Banner" 
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover" 
+          className="absolute inset-0 w-full h-full object-cover object-top" 
         />
       </div>
 
