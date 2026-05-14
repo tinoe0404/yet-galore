@@ -29,11 +29,11 @@ export function AboutTeaser() {
       >
         <motion.div style={{ y: imageY }} className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop" 
+            src="/images/about.jpeg" 
             alt="Editorial" 
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
         </motion.div>
       </motion.div>
