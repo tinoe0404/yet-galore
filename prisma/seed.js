@@ -5,7 +5,7 @@ const path = require('path');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const crypto = require('crypto');
 
-// Manual .env loader since node doesn't auto-load it
+// Load env
 const envFiles = ['.env.local', '.env'];
 for (const file of envFiles) {
   if (fs.existsSync(file)) {
@@ -65,7 +65,6 @@ async function main() {
   // ─── Admin User ───
   const email = process.env.ADMIN_EMAIL || 'admin@yetgalore.com';
   const password = process.env.ADMIN_PASSWORD || 'changeme123';
-  
   const existingAdmin = await prisma.adminUser.findUnique({ where: { email } });
   if (!existingAdmin) {
     const passwordHash = await bcrypt.hash(password, 12);
@@ -78,23 +77,17 @@ async function main() {
   // ─── Hero Image ───
   const heroPath = path.join(__dirname, '../public/images/hero.jpeg');
   let heroUrl = 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2000&auto=format&fit=crop';
-  
   if (fs.existsSync(heroPath)) {
     console.log('Uploading hero.jpeg to Cloudflare R2...');
     const r2Key = `hero-${Date.now()}.jpeg`;
     heroUrl = await uploadToR2(heroPath, r2Key);
-    console.log(`✓ Uploaded Hero Image: ${heroUrl}`);
-  } else {
-    console.log('hero.jpeg not found, using default URL.');
   }
 
-  // Update site settings
   const settings = [
-    { key: 'heroHeadline', value: 'The Autumn / Winter Collection' },
+    { key: 'heroHeadline', value: 'The Accessories Collection' },
     { key: 'heroSubheadline', value: 'NEW ARRIVALS' },
     { key: 'heroImage', value: heroUrl },
   ];
-
   for (const s of settings) {
     await prisma.siteSetting.upsert({
       where: { key: s.key },
@@ -102,101 +95,141 @@ async function main() {
       create: { key: s.key, value: s.value },
     });
   }
-  console.log(`✓ Site settings seeded`);
 
   // ─── Categories ───
   const categoriesData = [
-    { name: 'Ready-to-Wear', slug: 'ready-to-wear', description: 'Contemporary garments blending utility and luxury.' },
-    { name: 'Avant-Garde', slug: 'avant-garde', description: 'Experimental silhouettes and bold designs.' },
-    { name: 'Accessories', slug: 'accessories', description: 'Refined essentials to complete your look.' }
+    { name: 'Bags', slug: 'bags', description: 'Functional luxury bags.' },
+    { name: 'Handbags', slug: 'handbags', description: 'Elegant luxury handbags.' },
+    { name: 'Frames', slug: 'frames', description: 'Statement eyewear and frames.' },
+    { name: 'Hats', slug: 'hats', description: 'Premium headwear and hats.' }
   ];
 
-  const categories = {};
+  const dbCategories = {};
   for (const c of categoriesData) {
-    categories[c.slug] = await prisma.category.create({
-      data: { ...c, displayOrder: Object.keys(categories).length + 1, isActive: true }
+    dbCategories[c.name] = await prisma.category.create({
+      data: { ...c, displayOrder: Object.keys(dbCategories).length + 1, isActive: true }
     });
   }
-  console.log('✓ Categories created');
 
-  // ─── Images & Products ───
-  const imagesDir = path.join(__dirname, '../public/images');
-  const allFiles = fs.existsSync(imagesDir) ? fs.readdirSync(imagesDir) : [];
-  const productImages = allFiles.filter(f => f.match(/\.(jpeg|jpg|png|webp)$/i) && !f.includes('hero.jpeg'));
-
-  if (productImages.length === 0) {
-    console.log('No product images found in public/images. Skipping product creation.');
-    return;
-  }
-
-  console.log(`Found ${productImages.length} product images. Processing...`);
-
-  const productNames = [
-    "The Avant-Garde Coat", "The Denim Patchwork Skirt", "The Deconstructed Blouse",
-    "The Utility Cargo Pants", "The Asymmetric Dress", "The Oversized Trench",
-    "The Minimalist Blazer", "The Sculptural Vest", "The Pleated Trousers",
-    "The Technical Parka", "The Hand-Dyed Tunic", "The Distressed Denim Jacket",
-    "The Canvas Tote Bag", "The Wide-Brim Hat", "The Patchwork Vest", "The Runway Dress"
+  // ─── Products Map ───
+  // We manually map specific files to products to ensure total accuracy
+  const catalogue = [
+    {
+      category: 'Bags',
+      name: 'The Structured Leather Tote',
+      description: 'A timeless silhouette constructed with genuine calfskin leather. Perfect for everyday luxury.',
+      files: ['WhatsApp Image 2026-05-14 at 21.39.49.jpeg', 'WhatsApp Image 2026-05-14 at 21.40.58.jpeg']
+    },
+    {
+      category: 'Bags',
+      name: 'The Woven Shopper',
+      description: 'Hand-woven luxury shopper bag featuring ample storage space and a sleek design.',
+      files: ['WhatsApp Image 2026-05-14 at 21.58.00 (1).jpeg', 'WhatsApp Image 2026-05-14 at 21.58.00.jpeg']
+    },
+    {
+      category: 'Bags',
+      name: 'The Minimalist Duffle',
+      description: 'A refined weekend bag with minimalist hardware and durable materials.',
+      files: ['WhatsApp Image 2026-05-14 at 21.58.01.jpeg', 'WhatsApp Image 2026-05-14 at 21.58.02 (1).jpeg']
+    },
+    {
+      category: 'Bags',
+      name: 'The Travel Carry-All',
+      description: 'Your perfect companion for long journeys. Features multiple compartments and robust straps.',
+      files: ['WhatsApp Image 2026-05-14 at 21.58.02 (3).jpeg', 'WhatsApp Image 2026-05-14 at 21.58.03.jpeg']
+    },
+    {
+      category: 'Handbags',
+      name: 'The Envelope Clutch',
+      description: 'A petite handbag perfect for evening wear. Crafted with precision.',
+      files: ['WhatsApp Image 2026-05-14 at 22.00.59.jpeg']
+    },
+    {
+      category: 'Handbags',
+      name: 'The Mini Top Handle',
+      description: 'A statement handbag that perfectly complements any avant-garde outfit.',
+      files: ['WhatsApp Image 2026-05-14 at 22.01.00.jpeg']
+    },
+    {
+      category: 'Hats',
+      name: 'The Classic Wide-Brim',
+      description: 'An elegant sun hat featuring a classic silhouette to provide absolute shade in style.',
+      files: ['WhatsApp Image 2026-05-14 at 21.39.50 (1).jpeg', 'WhatsApp Image 2026-05-14 at 21.39.50.jpeg']
+    },
+    {
+      category: 'Hats',
+      name: 'The Wool Fedora',
+      description: 'A highly structured wool fedora offering a sharp touch to modern tailoring.',
+      files: ['WhatsApp Image 2026-05-14 at 21.41.51.jpeg', 'WhatsApp Image 2026-05-14 at 22.00.59 (3).jpeg']
+    },
+    {
+      category: 'Hats',
+      name: 'The Resort Straw Hat',
+      description: 'Lightweight, breathable straw woven into a dramatic wide brim shape.',
+      files: ['WhatsApp Image 2026-05-14 at 22.01.00 (1).jpeg']
+    },
+    {
+      category: 'Frames',
+      name: 'Oversized Acetate Frames',
+      description: 'Chunky acetate sunglasses that add a bold edge to your look.',
+      files: ['WhatsApp Image 2026-05-14 at 21.58.01 (1).jpeg', 'WhatsApp Image 2026-05-14 at 22.00.59 (1).jpeg']
+    },
+    {
+      category: 'Frames',
+      name: 'Classic Tortoiseshell Frames',
+      description: 'Vintage-inspired frames crafted from premium tortoiseshell material.',
+      files: ['WhatsApp Image 2026-05-14 at 22.00.59 (2).jpeg', 'WhatsApp Image 2026-05-14 at 22.01.00 (2).jpeg']
+    }
   ];
 
-  // Group images: 2-3 images per product depending on availability
-  const chunks = [];
-  for (let i = 0; i < productImages.length; i += 2) {
-    chunks.push(productImages.slice(i, i + 2));
-  }
+  const imagesDir = path.join(__dirname, '../public/images');
+  
+  for (let i = 0; i < catalogue.length; i++) {
+    const item = catalogue[i];
+    const slug = generateSlug(item.name) + '-' + crypto.randomBytes(2).toString('hex');
+    const price = Math.floor(Math.random() * (35 - 15 + 1)) + 15;
 
-  let index = 0;
-  for (const chunk of chunks) {
-    if (index >= productNames.length) break; // Use up to 16 products
-    const name = productNames[index];
-    const slug = generateSlug(name) + '-' + crypto.randomBytes(2).toString('hex');
-    const price = Math.floor(Math.random() * (35 - 15 + 1)) + 15; // Random price $15 - $35
-    
-    // Assign category randomly
-    const categorySlugs = Object.keys(categories);
-    const categorySlug = categorySlugs[index % categorySlugs.length];
-    
     const product = await prisma.product.create({
       data: {
-        name,
+        name: item.name,
         slug,
-        description: `A unique, luxury piece crafted for the modern individual. Features intricate detailing and premium materials perfectly suited for any occasion.`,
-        details: 'Materials: Sustainably sourced cotton and denim.\nCare: Dry clean recommended.',
-        price: price,
+        description: item.description,
+        details: 'Premium construction.\nCare: Handle with care.',
+        price,
         currency: 'USD',
-        isFeatured: index < 3,
+        isFeatured: i < 4,
         isPublished: true,
-        displayOrder: index + 1,
-        categoryId: categories[categorySlug].id,
+        displayOrder: i + 1,
+        categoryId: dbCategories[item.category].id,
       }
     });
 
-    // Upload images for this product
-    for (let j = 0; j < chunk.length; j++) {
-      const fileName = chunk[j];
+    for (let j = 0; j < item.files.length; j++) {
+      const fileName = item.files[j];
       const filePath = path.join(imagesDir, fileName);
-      const r2Key = `product-${product.id}-${j}-${Date.now()}${path.extname(fileName)}`;
-      
-      console.log(`  Uploading ${fileName}...`);
-      const imageUrl = await uploadToR2(filePath, r2Key);
-      
-      await prisma.productImage.create({
-        data: {
-          productId: product.id,
-          url: imageUrl,
-          publicId: r2Key,
-          altText: `${product.name} - View ${j + 1}`,
-          isPrimary: j === 0,
-          displayOrder: j,
-        }
-      });
+      if (fs.existsSync(filePath)) {
+        console.log(`  Uploading ${fileName} for ${item.name}...`);
+        const r2Key = `product-${product.id}-${j}-${Date.now()}${path.extname(fileName)}`;
+        const imageUrl = await uploadToR2(filePath, r2Key);
+        
+        await prisma.productImage.create({
+          data: {
+            productId: product.id,
+            url: imageUrl,
+            publicId: r2Key,
+            altText: `${product.name} - View ${j + 1}`,
+            isPrimary: j === 0,
+            displayOrder: j,
+          }
+        });
+      } else {
+        console.warn(`Missing file for ${item.name}: ${fileName}`);
+      }
     }
-
-    console.log(`✓ Created Product: ${name} ($${price}) with ${chunk.length} images`);
-    index++;
+    console.log(`✓ Created Product: ${item.name} ($${price}) in ${item.category}`);
   }
 
-  console.log('\n✅ Seed complete! All local products and images have been replaced and uploaded to Cloudflare R2.');
+  console.log('\n✅ Seed complete! All accessories are catalogued.');
 }
 
 main()
