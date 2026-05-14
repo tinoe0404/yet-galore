@@ -1,32 +1,38 @@
+'use client';
 import React from 'react';
-import { auth, signOut } from '@/features/auth/config';
+import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/Button';
-import { Logo } from '@/components/ui/Logo';
 
-export async function AdminHeader() {
-  const session = await auth();
+export function AdminHeader({ session }: { session: any }) {
+  const pathname = usePathname();
+
+  // Convert /admin/dashboard -> Dashboard
+  const segments = pathname.split('/').filter(Boolean);
+  let title = segments[segments.length - 1] || 'Dashboard';
+  
+  if (segments.includes('enquiries') && title !== 'enquiries') {
+    title = 'Enquiry Details';
+  }
+  
+  const displayTitle = title.charAt(0).toUpperCase() + title.slice(1).replace('-', ' ');
 
   return (
-    <header className="w-full bg-white border-b border-border px-6 h-16 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <Logo className="text-xl" />
-        <span className="font-sans text-xs tracking-widest uppercase text-muted border-l border-border pl-4 hidden md:inline">
-          Dashboard
-        </span>
-      </div>
+    <header className="w-full bg-white border-b border-border px-6 lg:px-10 h-20 flex items-center justify-between sticky top-0 z-20">
+      <h1 className="font-display text-2xl md:text-3xl">{displayTitle}</h1>
 
       <div className="flex items-center gap-6">
-        <span className="font-sans text-sm text-black/70">
+        <span className="font-sans text-sm text-black/70 hidden md:block">
           {session?.user?.name || 'Administrator'}
         </span>
-        <form action={async () => {
-          'use server';
-          await signOut({ redirectTo: '/admin/login' });
-        }}>
-          <Button type="submit" variant="outline" size="sm" className="text-xs">
-            Sign Out
-          </Button>
-        </form>
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          className="text-xs hidden md:flex"
+        >
+          Sign Out
+        </Button>
       </div>
     </header>
   );

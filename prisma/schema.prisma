@@ -31,7 +31,7 @@ model Category {
   name        String    @unique
   slug        String    @unique
   description String?
-  coverImage  String?   // Cloudinary URL
+  coverImage  String?   // R2 URL
   displayOrder Int      @default(0)
   isActive    Boolean   @default(true)
   createdAt   DateTime  @default(now())
@@ -81,15 +81,15 @@ model Product {
 
 // ─────────────────────────────────────────
 // PRODUCT IMAGE
-// Multiple images per product via Cloudinary.
+// Multiple images per product via R2.
 // ─────────────────────────────────────────
 model ProductImage {
   id           String   @id @default(cuid())
   productId    String
   product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  url          String   // Cloudinary delivery URL
-  publicId     String   // Cloudinary public_id (for deletion)
+  url          String   // R2 delivery URL
+  publicId     String   // R2 object key (for deletion)
   altText      String?
   width        Int?
   height       Int?

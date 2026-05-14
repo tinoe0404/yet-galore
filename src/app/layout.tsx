@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { Providers } from './providers';
 
 export default function RootLayout({
   children,
@@ -17,9 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background selection:bg-cream selection:text-black">
-        <NuqsAdapter>
-          {children}
-        </NuqsAdapter>
+        <Providers>
+          <NuqsAdapter>
+            {children}
+          </NuqsAdapter>
+        </Providers>
       </body>
     </html>
   );
