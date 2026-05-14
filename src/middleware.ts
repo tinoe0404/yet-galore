@@ -1,5 +1,8 @@
-export { auth as middleware } from '@/features/auth/config'
+import NextAuth from 'next-auth';
+import { authConfig } from '@/features/auth/auth.config';
+
+export default NextAuth(authConfig).auth;
 
 export const config = {
-  matcher: ['/admin/:path*']
-}
+  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$|.*\\.jpg$).*)'],
+};
