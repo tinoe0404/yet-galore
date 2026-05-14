@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Luxury fashion catalogue featuring premium handbags and jackets.",
 };
 
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -15,7 +17,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background selection:bg-cream selection:text-black">
-        {children}
+        <NuqsAdapter>
+          {children}
+        </NuqsAdapter>
       </body>
     </html>
   );
