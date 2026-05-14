@@ -13,12 +13,12 @@ export function Logo({ className, variant = 'dark', asLink = false }: LogoProps)
   const content = (
     <div className={cn("relative flex items-center justify-center", className)}>
       <Image 
-        src="/logo.jpg" 
+        src="/logo.png" 
         alt="Yet Galore" 
         width={120} 
         height={40} 
         className={cn(
-          "object-contain mix-blend-multiply", 
+          "object-contain", 
           variant === 'light' && "invert"
         )}
         priority
