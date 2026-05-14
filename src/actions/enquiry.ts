@@ -10,16 +10,23 @@ const enquirySchema = z.object({
   message: z.string().min(10),
   productId: z.string().optional(),
   productName: z.string().optional(),
+  type: z.enum(['GENERAL', 'PRODUCT', 'WHOLESALE']).optional(),
+  botField: z.string().optional(),
 });
 
 export async function submitEnquiry(data: z.infer<typeof enquirySchema>) {
+  // Honeypot check
+  if (data.botField) {
+    return { success: true };
+  }
+
   const result = enquirySchema.safeParse(data);
   if (!result.success) {
     return { error: 'Invalid fields' };
   }
 
   try {
-    const type = result.data.productId ? 'PRODUCT' : 'GENERAL';
+    const type = result.data.type || (result.data.productId ? 'PRODUCT' : 'GENERAL');
 
     await prisma.enquiry.create({
       data: {
