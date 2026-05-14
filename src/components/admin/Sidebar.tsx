@@ -21,8 +21,13 @@ export function Sidebar({ session }: { session: any }) {
   const navContent = (
     <>
       <div className="p-8 pb-12">
-        <Link href="/admin/dashboard" className="font-display text-2xl tracking-wider uppercase">
-          YET GALORE
+        <Link href="/admin/dashboard" className="inline-block">
+          <img 
+            src="/images/logo-light.png" 
+            alt="Yet Galore" 
+            className="h-8 w-auto" 
+            decoding="async"
+          />
         </Link>
       </div>
 
