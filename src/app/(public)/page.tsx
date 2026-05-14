@@ -49,7 +49,6 @@ export default async function LandingPage() {
         ctaHref="/catalogue"
         image={heroImage}
       />
-      <CategoryStrip categories={categories} />
       <FeaturedProducts products={products.map(p => ({ ...p, price: p.price ? Number(p.price) : null }))} />
       <EditorialBanner />
       <AboutTeaser />
