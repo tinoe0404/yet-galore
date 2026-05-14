@@ -117,7 +117,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
             <DisplayText as="h1" className="text-4xl md:text-5xl lg:text-6xl">{product.name}</DisplayText>
             {product.price && (
               <p className="font-mono text-lg tracking-wide pt-2">
-                {formatPrice(product.price, product.currency)}
+                {formatPrice(product.price.toNumber(), product.currency)}
               </p>
             )}
           </div>

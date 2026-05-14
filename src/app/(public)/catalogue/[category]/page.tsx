@@ -39,5 +39,5 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
     })
   ]);
 
-  return <CatalogueView products={products} categories={categories} title={category.name} />;
+  return <CatalogueView products={products.map(p => ({ ...p, price: p.price ? Number(p.price) : null }))} categories={categories} title={category.name} />;
 }

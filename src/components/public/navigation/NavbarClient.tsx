@@ -46,7 +46,7 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
       </a>
       
       <header className={navClasses}>
-        <div className="container-wide h-20 flex items-center justify-between">
+        <div className="container-wide h-20 flex items-center justify-between relative">
           
           {/* Desktop Left: Categories */}
           <nav className="hidden md:flex items-center gap-8 flex-1">
@@ -64,8 +64,8 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
             ))}
           </nav>
 
-          {/* Center: Logo */}
-          <div className="flex-shrink-0 relative z-50 flex items-center justify-center">
+          {/* Center: Logo — absolutely centered */}
+          <div className="absolute left-1/2 -translate-x-1/2 z-50">
             <Logo variant="dark" />
           </div>
 

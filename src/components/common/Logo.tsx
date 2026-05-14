@@ -16,12 +16,15 @@ export const Logo: React.FC<LogoProps> = ({
   href = '/'
 }) => {
   const content = (
-    <img 
-      src={variant === 'dark' ? '/images/logo-dark.png' : '/images/logo-light.png'}
-      alt="Yet Galore"
-      className={cn("h-8 md:h-10 w-auto", className)}
-      decoding="async"
-    />
+    <span
+      className={cn(
+        "font-serif text-2xl md:text-3xl tracking-[0.15em] uppercase select-none",
+        variant === 'dark' ? 'text-black' : 'text-white',
+        className
+      )}
+    >
+      Yet Galore
+    </span>
   );
 
   if (asLink) {

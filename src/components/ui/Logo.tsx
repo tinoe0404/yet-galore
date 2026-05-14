@@ -10,16 +10,19 @@ interface LogoProps {
 
 export function Logo({ className, variant = 'dark', asLink = false }: LogoProps) {
   const content = (
-    <img 
-      src={variant === 'dark' ? '/images/logo-dark.png' : '/images/logo-light.png'}
-      alt="Yet Galore"
-      className={cn("h-6 w-auto", className)}
-      decoding="async"
-    />
+    <span
+      className={cn(
+        "font-serif text-xl tracking-[0.15em] uppercase select-none",
+        variant === 'dark' ? 'text-black' : 'text-white',
+        className
+      )}
+    >
+      Yet Galore
+    </span>
   );
 
   if (asLink) {
-    return <Link href="/">{content}</Link>;
+    return <Link href="/" className="inline-block transition-opacity hover:opacity-80">{content}</Link>;
   }
 
   return content;

@@ -19,5 +19,5 @@ export async function RelatedProducts({ categoryId, currentProductId }: { catego
 
   if (!products.length) return null;
 
-  return <RelatedProductsGrid products={products} />;
+  return <RelatedProductsGrid products={products.map(p => ({ ...p, price: p.price ? Number(p.price) : null }))} />;
 }

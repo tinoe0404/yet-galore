@@ -50,7 +50,7 @@ export default async function LandingPage() {
         image={heroImage}
       />
       <CategoryStrip categories={categories} />
-      <FeaturedProducts products={products} />
+      <FeaturedProducts products={products.map(p => ({ ...p, price: p.price ? Number(p.price) : null }))} />
       <EditorialBanner />
       <AboutTeaser />
       <ContactTeaser />

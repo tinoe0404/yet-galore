@@ -20,5 +20,5 @@ export default async function CataloguePage() {
     })
   ]);
 
-  return <CatalogueView products={products} categories={categories} title="The Collection" />;
+  return <CatalogueView products={products.map(p => ({ ...p, price: p.price ? Number(p.price) : null }))} categories={categories} title="The Collection" />;
 }
