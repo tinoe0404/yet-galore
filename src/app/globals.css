@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-black: #0A0A0A;
+  --color-white: #FAFAFA;
+  --color-cream: #F5F0EA;
+  --color-beige: #E8DDD0;
+  --color-warm-gray-1: #C4B9AE;
+  --color-warm-gray-2: #8C837A;
+  --color-warm-gray-3: #5C554F;
+  --color-charcoal: #1E1A17;
+
+  --color-foreground: var(--color-black);
+  --color-background: var(--color-white);
+  --color-muted: var(--color-warm-gray-2);
+  --color-border: #E0D9D3;
+  --color-accent: var(--color-charcoal);
+
+  --color-admin-bg: #F8F6F4;
+  --color-admin-sidebar: #1E1A17;
+  --color-admin-border: #EAE4DE;
+
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-geist-sans), Helvetica, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .section-padding {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+  .container-wide {
+    @apply max-w-7xl mx-auto px-6 lg:px-12;
+  }
+  .container-narrow {
+    @apply max-w-3xl mx-auto px-6;
+  }
+  .product-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8;
+  }
+  .link-underline {
+    @apply relative after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:origin-bottom-left hover:after:scale-x-100;
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
 }

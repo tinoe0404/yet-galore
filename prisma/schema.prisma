@@ -1,0 +1,177 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────
+// ADMIN USER
+// Single-admin system. No user self-registration.
+// ─────────────────────────────────────────
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("admin_users")
+}
+
+// ─────────────────────────────────────────
+// CATEGORY
+// Handbags, Jackets, etc.
+// ─────────────────────────────────────────
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  coverImage  String?   // Cloudinary URL
+  displayOrder Int      @default(0)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products    Product[]
+
+  @@map("categories")
+}
+
+// ─────────────────────────────────────────
+// PRODUCT
+// Core catalogue item.
+// ─────────────────────────────────────────
+model Product {
+  id           String         @id @default(cuid())
+  name         String
+  slug         String         @unique
+  description  String
+  details      String?        // Rich text: materials, dimensions, care
+  price        Decimal?       @db.Decimal(10, 2)  // Optional display price
+  currency     String         @default("USD")
+  isFeatured   Boolean        @default(false)
+  isPublished  Boolean        @default(true)
+  displayOrder Int            @default(0)
+
+  // Relationships
+  categoryId   String
+  category     Category       @relation(fields: [categoryId], references: [id])
+  images       ProductImage[]
+  enquiries    Enquiry[]
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+
+  // Timestamps
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([categoryId])
+  @@index([slug])
+  @@index([isFeatured])
+  @@index([isPublished])
+  @@map("products")
+}
+
+// ─────────────────────────────────────────
+// PRODUCT IMAGE
+// Multiple images per product via Cloudinary.
+// ─────────────────────────────────────────
+model ProductImage {
+  id           String   @id @default(cuid())
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  url          String   // Cloudinary delivery URL
+  publicId     String   // Cloudinary public_id (for deletion)
+  altText      String?
+  width        Int?
+  height       Int?
+  isPrimary    Boolean  @default(false)
+  displayOrder Int      @default(0)
+
+  createdAt    DateTime @default(now())
+
+  @@index([productId])
+  @@map("product_images")
+}
+
+// ─────────────────────────────────────────
+// ENQUIRY
+// Product or general contact enquiries.
+// ─────────────────────────────────────────
+model Enquiry {
+  id          String        @id @default(cuid())
+  type        EnquiryType   @default(GENERAL)
+
+  // Contact info
+  name        String
+  email       String
+  phone       String?
+  message     String
+
+  // Optional product reference
+  productId   String?
+  product     Product?      @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName String?       // Snapshot in case product is deleted
+
+  // Status
+  status      EnquiryStatus @default(UNREAD)
+  adminNotes  String?
+
+  // Timestamps
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([status])
+  @@index([productId])
+  @@map("enquiries")
+}
+
+enum EnquiryType {
+  GENERAL
+  PRODUCT
+  WHOLESALE
+}
+
+enum EnquiryStatus {
+  UNREAD
+  READ
+  RESPONDED
+  ARCHIVED
+}
+
+// ─────────────────────────────────────────
+// SOCIAL LINKS
+// Managed from admin dashboard.
+// ─────────────────────────────────────────
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String   @unique  // "instagram", "tiktok", "whatsapp"
+  url       String
+  handle    String?
+  isActive  Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+
+  @@map("social_links")
+}
+
+// ─────────────────────────────────────────
+// SITE SETTINGS
+// Key-value store for global settings.
+// ─────────────────────────────────────────
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  type      String   @default("string") // "string" | "boolean" | "json"
+  updatedAt DateTime @updatedAt
+
+  @@map("site_settings")
+}
