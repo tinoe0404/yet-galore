@@ -71,7 +71,7 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
 
           {/* Desktop Right: Social & Enquire */}
           <div className="hidden md:flex items-center gap-6 flex-1 justify-end">
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:opacity-70 transition-opacity" aria-label="Instagram">
+            <a href="https://www.instagram.com/yet.galore?igsh=MWl4bTFoMTdwbDA4bw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="hover:opacity-70 transition-opacity" aria-label="Instagram">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 width="20" 

@@ -95,7 +95,7 @@ export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
             transition={{ delay: 0.4 }}
             className="mt-auto pb-12"
           >
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="font-sans text-sm tracking-wider uppercase text-black">
+            <a href="https://www.instagram.com/yet.galore?igsh=MWl4bTFoMTdwbDA4bw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="font-sans text-sm tracking-wider uppercase text-black">
               Instagram
             </a>
           </motion.div>

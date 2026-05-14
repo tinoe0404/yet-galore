@@ -63,12 +63,12 @@ export function Footer() {
             <h4 className="font-sans text-xs uppercase tracking-widest text-cream/60">Connect</h4>
             <ul className="space-y-4 font-sans">
               <li>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-cream hover:text-white transition-colors duration-200">
+                <a href="https://www.instagram.com/yet.galore?igsh=MWl4bTFoMTdwbDA4bw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="text-cream hover:text-white transition-colors duration-200">
                   Instagram
                 </a>
               </li>
               <li>
-                <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="text-cream hover:text-white transition-colors duration-200">
+                <a href="https://www.tiktok.com/@yet.galore" target="_blank" rel="noreferrer" className="text-cream hover:text-white transition-colors duration-200">
                   TikTok
                 </a>
               </li>
