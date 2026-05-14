@@ -48,54 +48,59 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
       <header className={navClasses}>
         <div className="container-wide h-20 flex items-center justify-between relative">
           
-          {/* Desktop Left: Social & Enquire */}
-          <div className="hidden md:flex items-center gap-6 flex-1">
-            <a href="https://www.instagram.com/yet.galore?igsh=MWl4bTFoMTdwbDA4bw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="hover:opacity-70 transition-opacity" aria-label="Instagram">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="20" 
-                height="20" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1.5" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                className="w-5 h-5"
-              >
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-              </svg>
-            </a>
-            <Link 
-              href="/contact" 
-              className="font-sans text-sm tracking-wider uppercase hover:text-black/70 transition-colors"
-            >
-              Enquire
-            </Link>
-          </div>
+          {/* Desktop Left: Empty to balance flex layout */}
+          <div className="hidden md:flex flex-1" />
 
           {/* Center: Logo — absolutely centered */}
           <div className="absolute left-1/2 -translate-x-1/2 z-50">
             <Logo variant="dark" />
           </div>
 
-          {/* Desktop Right: Categories */}
-          <nav className="hidden md:flex items-center gap-8 flex-1 justify-end">
-            {categories.map(cat => (
+          {/* Desktop Right: Categories + Social/Enquire */}
+          <div className="hidden md:flex items-center gap-6 flex-1 justify-end">
+            <nav className="flex items-center gap-6">
+              {categories.map(cat => (
+                <Link 
+                  key={cat.slug} 
+                  href={`/catalogue/${cat.slug}`}
+                  className={cn(
+                    "font-sans text-sm tracking-wider uppercase transition-colors hover:text-black/70",
+                    pathname === `/catalogue/${cat.slug}` && "underline underline-offset-4"
+                  )}
+                >
+                  {cat.name}
+                </Link>
+              ))}
+            </nav>
+            
+            <div className="w-[1px] h-4 bg-black/20" /> {/* Clean Divider */}
+            
+            <div className="flex items-center gap-5">
+              <a href="https://www.instagram.com/yet.galore?igsh=MWl4bTFoMTdwbDA4bw%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" className="hover:opacity-70 transition-opacity" aria-label="Instagram">
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  width="18" 
+                  height="18" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="1.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                </svg>
+              </a>
               <Link 
-                key={cat.slug} 
-                href={`/catalogue/${cat.slug}`}
-                className={cn(
-                  "font-sans text-sm tracking-wider uppercase transition-colors hover:text-black/70",
-                  pathname === `/catalogue/${cat.slug}` && "underline underline-offset-4"
-                )}
+                href="/contact" 
+                className="font-sans text-sm tracking-wider uppercase hover:text-black/70 transition-colors"
               >
-                {cat.name}
+                Enquire
               </Link>
-            ))}
-          </nav>
+            </div>
+          </div>
 
           {/* Mobile Right: Hamburger */}
           <div className="flex md:hidden flex-1 justify-end relative z-50">
