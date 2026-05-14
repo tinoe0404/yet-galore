@@ -25,6 +25,7 @@ export function AboutTeaser() {
           src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop" 
           alt="Editorial" 
           fill 
+          unoptimized
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 50vw"
         />

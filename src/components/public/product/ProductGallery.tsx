@@ -17,10 +17,12 @@ export function ProductGallery({ images }: ProductGalleryProps) {
 
   const activeImage = images[activeIndex];
   
-  const getImageUrl = (img: any, transforms: string) => {
-    if (img.publicId) return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${transforms}/${img.publicId}`;
-    if (img.url) return img.url;
-    return 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1500&auto=format&fit=crop';
+  const getImageUrl = (img: any) => {
+    return img.url || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1500&auto=format&fit=crop';
+  };
+
+  const getThumbnailUrl = (img: any) => {
+    return img.thumbnailUrl || img.url || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=160&auto=format&fit=crop';
   };
 
   return (
@@ -40,10 +42,11 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             className="absolute inset-0"
           >
             <Image
-              src={getImageUrl(activeImage, 'f_auto,q_auto,c_fill,w_1200,h_1500')}
+              src={getImageUrl(activeImage)}
               alt={activeImage.altText || 'Product Image'}
               fill
               priority
+              unoptimized
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 60vw"
             />
@@ -81,9 +84,10 @@ export function ProductGallery({ images }: ProductGalleryProps) {
                 )}
               >
                 <Image
-                  src={getImageUrl(img, 'f_auto,q_auto,c_fill,w_160,h_160')}
+                  src={getThumbnailUrl(img)}
                   alt="Thumbnail"
                   fill
+                  unoptimized
                   className="object-cover"
                 />
               </button>
@@ -109,9 +113,10 @@ export function ProductGallery({ images }: ProductGalleryProps) {
             </button>
             <div className="relative w-full h-full max-w-5xl max-h-[90vh]">
               <Image
-                src={getImageUrl(activeImage, 'f_auto,q_auto,c_limit,w_2000,h_2000')}
+                src={getImageUrl(activeImage)}
                 alt={activeImage.altText || 'Product Image Full'}
                 fill
+                unoptimized
                 className="object-contain"
                 sizes="100vw"
               />

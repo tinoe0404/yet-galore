@@ -31,9 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!product) return {};
 
   const primaryImage = product.images[0];
-  const imageUrl = primaryImage?.publicId 
-    ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/w_1200,h_630,c_fill/${primaryImage.publicId}`
-    : (primaryImage?.url || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1200&auto=format&fit=crop');
+  const imageUrl = primaryImage?.url || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1200&auto=format&fit=crop';
 
   return {
     title: `${product.name} | Yet Galore`,

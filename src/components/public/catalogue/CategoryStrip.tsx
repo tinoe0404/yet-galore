@@ -14,12 +14,7 @@ export function CategoryStrip({ categories }: { categories: any[] }) {
   return (
     <section className="flex flex-col md:flex-row w-full bg-background border-b border-border">
       {displayCats.map((cat: any) => {
-        // Safe check for Cloudinary or direct URL fallback
-        const imageUrl = cat.coverImage && cat.coverImage.startsWith('http') 
-          ? cat.coverImage 
-          : (cat.coverImage 
-              ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,c_fill,w_1000,h_1000/${cat.coverImage}`
-              : 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1500&auto=format&fit=crop');
+        const imageUrl = cat.coverImage || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1500&auto=format&fit=crop';
 
         return (
           <motion.div 
@@ -33,6 +28,7 @@ export function CategoryStrip({ categories }: { categories: any[] }) {
                 src={imageUrl} 
                 alt={cat.name}
                 fill
+                unoptimized
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />

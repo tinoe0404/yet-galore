@@ -19,6 +19,7 @@ export function AboutClientView() {
           alt="Yet Galore Editorial" 
           fill 
           priority
+          unoptimized
           className="object-cover"
         />
         <div className="absolute inset-0 bg-black/20" />
@@ -82,6 +83,7 @@ export function AboutClientView() {
               src="https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000&auto=format&fit=crop" 
               alt="Craftsmanship Details" 
               fill 
+              unoptimized
               className="object-cover"
             />
           </motion.div>

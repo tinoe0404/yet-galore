@@ -20,6 +20,7 @@ export function HeroSection({ headline, subheadline, ctaLabel, ctaHref, image }:
           alt="Hero Banner" 
           fill 
           priority
+          unoptimized
           className="object-cover" 
           sizes="(max-width: 768px) 100vw, 55vw"
         />

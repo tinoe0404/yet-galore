@@ -12,9 +12,7 @@ interface ProductCardProps {
 export function ProductCard({ product, variant = 'default', priority = false }: ProductCardProps) {
   // Safe image parsing
   const firstImage = product.images?.[0];
-  const imageUrl = firstImage?.publicId 
-    ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto,c_fill,w_800,h_1000/${firstImage.publicId}`
-    : (firstImage?.url || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=800&auto=format&fit=crop');
+  const imageUrl = firstImage?.url || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=800&auto=format&fit=crop';
 
   return (
     <Link href={`/product/${product.slug}`} className="group block w-full">
@@ -27,6 +25,7 @@ export function ProductCard({ product, variant = 'default', priority = false }: 
           alt={firstImage?.altText || product.name}
           fill
           priority={priority}
+          unoptimized
           className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />

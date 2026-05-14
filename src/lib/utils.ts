@@ -30,11 +30,4 @@ export function formatPrice(price: number | string | null | undefined, currency:
   }).format(numPrice);
 }
 
-export function getCloudinaryUrl(publicId: string, opts = 'f_auto,q_auto,c_fill,w_800,h_800') {
-  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-  if (!cloudName) {
-    console.warn('NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME is not set');
-    return '';
-  }
-  return `https://res.cloudinary.com/${cloudName}/image/upload/${opts}/${publicId}`;
-}
+
