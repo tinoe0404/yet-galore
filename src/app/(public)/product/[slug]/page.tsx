@@ -7,6 +7,7 @@ import { ProductGallery } from '@/components/public/product/ProductGallery';
 import { ProductDetailsAccordion } from '@/components/public/product/ProductDetailsAccordion';
 import { RelatedProducts } from '@/components/public/product/RelatedProducts';
 import { ClientEnquiryTrigger } from '@/components/public/product/ClientEnquiryTrigger';
+import { AddToCartButton } from '@/components/public/product/AddToCartButton';
 import { DisplayText, BodyText } from '@/components/ui/Typography';
 import { formatPrice } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
@@ -137,7 +138,16 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           <div className="w-full h-[1px] bg-border my-10" />
 
           {/* Actions */}
-          <div className="space-y-6">
+          <div className="space-y-4">
+            <AddToCartButton
+              product={{
+                id: product.id,
+                name: product.name,
+                slug: product.slug,
+                price: product.price ? product.price.toNumber() : null,
+                image: product.images[0]?.url,
+              }}
+            />
             <ClientEnquiryTrigger product={{ id: product.id, name: product.name }} />
             
             <a 

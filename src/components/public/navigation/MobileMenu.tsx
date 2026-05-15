@@ -6,12 +6,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { mobileMenuOverlay, mobileMenuStagger, mobileMenuItem } from '@/lib/animations';
 import { Logo } from '@/components/common/Logo';
 import { useRouter } from 'next/navigation';
+import { useCart } from '@/context/CartContext';
 
 interface MobileMenuProps {
   id?: string;
   isOpen: boolean;
   categories: { name: string; slug: string }[];
   onClose: () => void;
+}
+
+function CartLinkMobile() {
+  const { totalQty } = useCart();
+  return (
+    <Link href="/cart" aria-label="Cart" className="opacity-90 hover:opacity-70 relative">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="20" cy="20" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      {totalQty ? <span className="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-cream text-black text-xs font-medium">{totalQty}</span> : null}
+    </Link>
+  );
 }
 
 export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps) {
@@ -146,9 +157,7 @@ export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps)
                 <Link href="/search" aria-label="Search" className="opacity-90 hover:opacity-70">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                 </Link>
-                <Link href="/cart" aria-label="Cart" className="opacity-90 hover:opacity-70">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="20" cy="20" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                </Link>
+                <CartLinkMobile />
               </div>
             </motion.div>
           </motion.nav>

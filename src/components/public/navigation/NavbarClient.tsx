@@ -6,14 +6,31 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Logo } from '@/components/common/Logo';
 import { MobileMenu } from './MobileMenu';
+import { useCart } from '@/context/CartContext';
 
 export function NavbarClient({ categories }: { categories: { name: string; slug: string }[] }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    // Set initial state
+    handleScroll();
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }, [isOpen]);
+
+  const isHome = pathname === '/';
+  const isTransparent = isHome && !isScrolled;
 
   return (
     <>
@@ -21,7 +38,10 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
         Skip to content
       </a>
 
-      <header className="fixed top-0 inset-x-0 z-50 bg-transparent text-white">
+      <header className={cn(
+        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
+        isTransparent ? "bg-transparent text-white" : "bg-background/95 backdrop-blur-md text-black border-b border-border"
+      )}>
       <div className="w-full px-6 md:px-12 h-20 flex items-center justify-between">
 
         {/* Left nav links (compact for large screens) - HOME removed to reduce clutter */}
@@ -33,20 +53,18 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
 
         {/* Center logo */}
         <div className="flex-1 flex justify-center">
-          <Logo variant="light" className="!w-[220px] !h-auto" />
+          <Logo variant={isTransparent ? "light" : "dark"} className="!w-[220px] !h-auto" />
         </div>
 
         {/* Right icons / Mobile hamburger */}
         <div className="flex items-center gap-6">
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/account" aria-label="Account" className="opacity-90 hover:opacity-70">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </Link>
-            <Link href="/search" aria-label="Search" className="opacity-90 hover:opacity-70">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            </Link>
             <Link href="/cart" aria-label="Cart" className="opacity-90 hover:opacity-70">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="20" cy="20" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+              <div className="relative">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="20" cy="20" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                { /* cart count badge */ }
+                <CartCountBadge isTransparent={isTransparent} />
+              </div>
             </Link>
           </div>
 
@@ -59,9 +77,9 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
             aria-expanded={isOpen}
           >
             <div className="w-6 h-3 relative flex flex-col justify-between">
-              <span className="block h-[1px] w-full bg-white" />
-              <span className="block h-[1px] w-full bg-white" />
-              <span className="block h-[1px] w-full bg-white" />
+              <span className={cn("block h-[1px] w-full transition-colors duration-300", isTransparent ? "bg-white" : "bg-black")} />
+              <span className={cn("block h-[1px] w-full transition-colors duration-300", isTransparent ? "bg-white" : "bg-black")} />
+              <span className={cn("block h-[1px] w-full transition-colors duration-300", isTransparent ? "bg-white" : "bg-black")} />
             </div>
           </button>
         </div>
@@ -71,5 +89,18 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
 
       <MobileMenu id="mobile-menu" isOpen={isOpen} categories={categories} onClose={() => setIsOpen(false)} />
     </>
+  );
+}
+
+function CartCountBadge({ isTransparent }: { isTransparent: boolean }) {
+  const { totalQty } = useCart();
+  if (!totalQty) return null;
+  return (
+    <span className={cn(
+      "absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-medium transition-colors duration-300",
+      isTransparent ? "bg-cream text-black" : "bg-black text-white"
+    )}>
+      {totalQty}
+    </span>
   );
 }

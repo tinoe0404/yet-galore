@@ -18,11 +18,11 @@ export function HeroSection({ headline, subheadline, ctaLabel, ctaHref, image }:
           src={image}
           alt="Hero Banner"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-top origin-top scale-110 md:scale-125 lg:scale-150 z-0"
+          className="absolute inset-0 w-full h-full object-cover object-top z-0"
         />
 
         {/* Dark overlay for contrast */}
-        <div className="absolute inset-0 bg-black/55 z-5" />
+        <div className="absolute inset-0 bg-black/45 z-5" />
       </div>
 
       {/* Centered content */}
