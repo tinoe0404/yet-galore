@@ -2,25 +2,33 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 import { Logo } from '@/components/common/Logo';
 import { MobileMenu } from './MobileMenu';
 
 export function NavbarClient({ categories }: { categories: { name: string; slug: string }[] }) {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }, [isOpen]);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-transparent text-white">
+    <>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:p-2 focus:bg-white focus:text-black">
+        Skip to content
+      </a>
+
+      <header className="fixed top-0 inset-x-0 z-50 bg-transparent text-white">
       <div className="w-full px-6 md:px-12 h-20 flex items-center justify-between">
 
         {/* Left nav links */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="/catalogue" className="font-sans text-sm tracking-wider uppercase">SHOP</Link>
-          <Link href="/about" className="font-sans text-sm tracking-wider uppercase">ABOUT</Link>
-          <Link href="/collections" className="font-sans text-sm tracking-wider uppercase">COLLECTIONS</Link>
+          <Link href="/catalogue" className={cn("font-sans text-sm tracking-wider uppercase", pathname?.startsWith('/catalogue') && 'underline')}>SHOP</Link>
+          <Link href="/about" className={cn("font-sans text-sm tracking-wider uppercase", pathname === '/about' && 'underline')}>ABOUT</Link>
+          <Link href="/collections" className={cn("font-sans text-sm tracking-wider uppercase", pathname?.startsWith('/collections') && 'underline')}>COLLECTIONS</Link>
         </nav>
 
         {/* Center logo */}
@@ -43,7 +51,13 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
           </div>
 
           {/* Mobile hamburger */}
-          <button className="md:hidden p-2" onClick={() => setIsOpen(true)} aria-label="Open menu">
+          <button
+            className="md:hidden p-2"
+            onClick={() => setIsOpen(true)}
+            aria-label="Open menu"
+            aria-controls="mobile-menu"
+            aria-expanded={isOpen}
+          >
             <div className="w-6 h-3 relative flex flex-col justify-between">
               <span className="block h-[1px] w-full bg-white" />
               <span className="block h-[1px] w-full bg-white" />
@@ -53,8 +67,9 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
         </div>
 
       </div>
+      </header>
 
-      <MobileMenu isOpen={isOpen} categories={categories} onClose={() => setIsOpen(false)} />
-    </header>
+      <MobileMenu id="mobile-menu" isOpen={isOpen} categories={categories} onClose={() => setIsOpen(false)} />
+    </>
   );
 }

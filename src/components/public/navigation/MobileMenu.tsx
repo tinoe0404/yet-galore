@@ -8,12 +8,13 @@ import { Logo } from '@/components/common/Logo';
 import { useRouter } from 'next/navigation';
 
 interface MobileMenuProps {
+  id?: string;
   isOpen: boolean;
   categories: { name: string; slug: string }[];
   onClose: () => void;
 }
 
-export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
+export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -56,6 +57,7 @@ export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          id={id}
           ref={menuRef}
           variants={mobileMenuOverlay}
           initial="initial"
