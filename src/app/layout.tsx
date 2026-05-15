@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { Providers } from './providers';
+import SetVh from '@/components/common/SetVh';
 
 export default function RootLayout({
   children,
@@ -17,8 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
       <body className="min-h-full flex flex-col font-sans text-foreground bg-background selection:bg-cream selection:text-black">
         <Providers>
+          <SetVh />
           <NuqsAdapter>
             {children}
           </NuqsAdapter>

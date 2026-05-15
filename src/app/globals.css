@@ -56,3 +56,15 @@ body {
 html, body {
   overflow-x: hidden;
 }
+
+/* Full-screen utility using dynamic viewport units for Safari/mobile browsers */
+:root {
+  --vh: 1vh;
+}
+
+@layer utilities {
+  .full-screen {
+    height: calc(var(--vh, 1vh) * 100);
+    min-height: calc(var(--vh, 1vh) * 100);
+  }
+}
