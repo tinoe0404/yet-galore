@@ -24,9 +24,8 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
       <header className="fixed top-0 inset-x-0 z-50 bg-transparent text-white">
       <div className="w-full px-6 md:px-12 h-20 flex items-center justify-between">
 
-        {/* Left nav links */}
+        {/* Left nav links (compact for large screens) - HOME removed to reduce clutter */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="/" className={cn("font-sans text-sm tracking-wider uppercase", pathname === '/' && 'underline')}>HOME</Link>
           <Link href="/catalogue" className={cn("font-sans text-sm tracking-wider uppercase", pathname?.startsWith('/catalogue') && 'underline')}>SHOP</Link>
           <Link href="/about" className={cn("font-sans text-sm tracking-wider uppercase", pathname === '/about' && 'underline')}>ABOUT</Link>
           <Link href="/collections" className={cn("font-sans text-sm tracking-wider uppercase", pathname?.startsWith('/collections') && 'underline')}>COLLECTIONS</Link>

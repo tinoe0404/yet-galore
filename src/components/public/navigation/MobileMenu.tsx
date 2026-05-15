@@ -111,6 +111,15 @@ export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps)
               </Link>
             </motion.div>
 
+            {/* List categories under SHOP */}
+            {categories.map((c) => (
+              <motion.div key={c.slug} variants={mobileMenuItem}>
+                <Link href={`/catalogue/${c.slug}`} className="font-display text-3xl tracking-tight text-black pl-4" onClick={onClose}>
+                  {c.name}
+                </Link>
+              </motion.div>
+            ))}
+
             <motion.div variants={mobileMenuItem}>
               <Link href="/about" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
                 ABOUT
