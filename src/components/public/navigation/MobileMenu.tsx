@@ -1,9 +1,11 @@
-'use client';
+"use client";
 
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { mobileMenuOverlay, mobileMenuStagger, mobileMenuItem } from '@/lib/animations';
+import { Logo } from '@/components/common/Logo';
+import { useRouter } from 'next/navigation';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -13,6 +15,7 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -60,6 +63,33 @@ export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
           exit="exit"
           className="fixed inset-0 z-40 bg-cream pt-24 px-6 flex flex-col"
         >
+          {/* Top header with back button */}
+          <div className="absolute top-4 left-0 right-0 px-6 flex items-center justify-between">
+            <button
+              onClick={() => {
+                // Prefer navigating back if there's history, otherwise just close the menu
+                try {
+                  if (window.history.length > 1) {
+                    router.back();
+                  } else {
+                    onClose();
+                  }
+                } catch (e) {
+                  onClose();
+                }
+              }}
+              aria-label="Back"
+              className="p-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+
+            <div className="flex-1 flex justify-center">
+              <Logo variant="dark" asLink={false} className="!w-[160px]" />
+            </div>
+
+            <div className="w-8" />
+          </div>
           <motion.nav 
             variants={mobileMenuStagger}
             initial="initial"
