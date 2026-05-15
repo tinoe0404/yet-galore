@@ -67,25 +67,42 @@ export function MobileMenu({ isOpen, categories, onClose }: MobileMenuProps) {
             exit="exit"
             className="flex flex-col gap-6 mt-12"
           >
-            {categories.map((cat) => (
-              <motion.div key={cat.slug} variants={mobileMenuItem}>
-                <Link 
-                  href={`/catalogue/${cat.slug}`}
-                  className="font-display text-4xl tracking-tight text-black"
-                  onClick={onClose}
-                >
-                  {cat.name}
-                </Link>
-              </motion.div>
-            ))}
-            <motion.div variants={mobileMenuItem} className="mt-8 pt-8 border-t border-border">
-              <Link 
-                href="/contact" 
-                className="font-display text-4xl tracking-tight text-black"
-                onClick={onClose}
-              >
-                Enquire
+            <motion.div variants={mobileMenuItem}>
+              <Link href="/catalogue" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
+                SHOP
               </Link>
+            </motion.div>
+
+            <motion.div variants={mobileMenuItem}>
+              <Link href="/about" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
+                ABOUT
+              </Link>
+            </motion.div>
+
+            <motion.div variants={mobileMenuItem}>
+              <Link href="/collections" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
+                COLLECTIONS
+              </Link>
+            </motion.div>
+
+            <motion.div variants={mobileMenuItem} className="mt-8 pt-8 border-t border-border">
+              <Link href="/contact" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
+                ENQUIRE
+              </Link>
+            </motion.div>
+
+            <motion.div variants={mobileMenuItem} className="mt-8">
+              <div className="flex items-center gap-6">
+                <Link href="/account" aria-label="Account" className="opacity-90 hover:opacity-70">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </Link>
+                <Link href="/search" aria-label="Search" className="opacity-90 hover:opacity-70">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </Link>
+                <Link href="/cart" aria-label="Cart" className="opacity-90 hover:opacity-70">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="20" r="1"/><circle cx="20" cy="20" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                </Link>
+              </div>
             </motion.div>
           </motion.nav>
 

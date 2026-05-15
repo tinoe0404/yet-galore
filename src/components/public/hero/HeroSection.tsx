@@ -12,16 +12,18 @@ export function HeroSection({ headline, subheadline, ctaLabel, ctaHref, image }:
   
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Background image fills the section */}
-      <img
-        src={image}
-        alt="Hero Banner"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover object-top origin-top scale-110 md:scale-125 lg:scale-150"
-      />
+      {/* Background image contained to the hero section so it scrolls away */}
+      <div className="absolute inset-0 left-1/2 transform -translate-x-1/2 w-[100vw] h-full overflow-hidden">
+        <img
+          src={image}
+          alt="Hero Banner"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover object-top origin-top scale-110 md:scale-125 lg:scale-150 z-0"
+        />
 
-      {/* Dark overlay for contrast */}
-      <div className="absolute inset-0 bg-black/55" />
+        {/* Dark overlay for contrast */}
+        <div className="absolute inset-0 bg-black/55 z-5" />
+      </div>
 
       {/* Centered content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-6 text-center">
