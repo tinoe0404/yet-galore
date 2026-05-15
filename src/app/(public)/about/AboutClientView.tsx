@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { fadeUp, slideInLeft, EASE_SMOOTH } from '@/lib/animations';
 import { DisplayText, BodyText, Heading } from '@/components/ui/Typography';
+import siteProfile from '@/data/siteProfile.json';
 import { Button } from '@/components/ui/Button';
 import { useRouter } from 'next/navigation';
 
@@ -46,7 +47,7 @@ export function AboutClientView() {
           className="max-w-3xl mx-auto text-center"
         >
           <h2 className="font-display italic text-3xl md:text-4xl lg:text-5xl leading-tight opacity-90">
-            "Yet Galore was born from a desire to elevate the everyday. We curate pieces not just to be worn, but to be experienced—where every stitch speaks to a commitment of unwavering quality."
+            {`"${siteProfile.tagline}"`}
           </h2>
         </motion.div>
       </section>
