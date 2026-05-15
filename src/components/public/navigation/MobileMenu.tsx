@@ -100,6 +100,12 @@ export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps)
             className="flex flex-col gap-6 mt-12"
           >
             <motion.div variants={mobileMenuItem}>
+              <Link href="/" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
+                HOME
+              </Link>
+            </motion.div>
+
+            <motion.div variants={mobileMenuItem}>
               <Link href="/catalogue" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
                 SHOP
               </Link>
