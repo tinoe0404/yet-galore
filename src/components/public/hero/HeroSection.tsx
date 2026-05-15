@@ -11,37 +11,38 @@ export function HeroSection({ headline, subheadline, ctaLabel, ctaHref, image }:
   const router = useRouter();
   
   return (
-    <section className="relative min-h-screen flex flex-col md:flex-row pt-20 md:pt-0 border-b border-border">
-      {/* Image Left — absolute fill inside min-h-screen parent */}
-      <div className="relative w-full md:w-[55%] h-[60vh] md:h-screen bg-beige overflow-hidden">
-        <img 
-          src={image} 
-          alt="Hero Banner" 
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover object-top" 
-        />
-      </div>
+    <section className="relative min-h-screen w-full overflow-hidden">
+      {/* Background image fills the section */}
+      <img
+        src={image}
+        alt="Hero Banner"
+        decoding="async"
+        className="absolute inset-0 w-full h-full object-cover object-top origin-top scale-110 md:scale-125 lg:scale-150"
+      />
 
-      {/* Text Right — staggered fadeUp */}
-      <div className="w-full md:w-[45%] flex flex-col justify-center px-6 md:px-12 py-16 md:py-0 bg-background">
-        <motion.div 
+      {/* Dark overlay for contrast */}
+      <div className="absolute inset-0 bg-black/55" />
+
+      {/* Centered content */}
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-6 text-center">
+        <motion.div
           variants={heroContainer}
           initial="initial"
           animate="animate"
-          className="max-w-lg space-y-8"
+          className="max-w-3xl space-y-6"
         >
           {subheadline && (
             <motion.div variants={heroChild}>
-              <Tag>{subheadline}</Tag>
+              <Tag className="text-white/80">{subheadline}</Tag>
             </motion.div>
           )}
           <motion.div variants={heroChild}>
-            <DisplayText className="text-black">
+            <DisplayText className="text-white drop-shadow-lg leading-tight text-4xl md:text-[64px] lg:text-[96px]">
               {headline}
             </DisplayText>
           </motion.div>
-          <motion.div variants={heroChild} className="pt-4">
-            <Button variant="outline" withArrow onClick={() => router.push(ctaHref)}>
+          <motion.div variants={heroChild} className="pt-6">
+            <Button variant="outline" withArrow className="text-white border-white hover:bg-white/5 group" onClick={() => router.push(ctaHref)}>
               {ctaLabel}
             </Button>
           </motion.div>

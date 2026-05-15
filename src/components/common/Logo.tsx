@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface LogoProps {
@@ -18,17 +17,13 @@ export const Logo: React.FC<LogoProps> = ({
 }) => {
   const content = (
     <div className={cn("relative flex items-center justify-center", className)}>
-      <Image 
-        src="/logo.png" 
-        alt="Yet Galore" 
-        width={120} 
-        height={40} 
-        className={cn(
-          "object-contain", 
-          variant === 'light' && "invert"
-        )}
-        priority
-      />
+      <span className={cn(
+        "font-display font-light tracking-tight",
+        "text-2xl md:text-4xl lg:text-5xl",
+        variant === 'light' ? 'text-white' : 'text-black'
+      )}>
+        YETGALORE
+      </span>
     </div>
   );
 

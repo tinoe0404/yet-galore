@@ -36,16 +36,19 @@ export default async function LandingPage() {
     return acc;
   }, {});
 
-  const headline = settings.heroHeadline || "The Autumn / Winter Collection";
-  const subheadline = settings.heroSubheadline || "NEW ARRIVALS";
-  const heroImage = settings.heroImage || "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=2000&auto=format&fit=crop";
+  const headline = settings.heroHeadline || "Timeless Pieces , Handmade with purpose";
+  const subheadline = settings.heroSubheadline || "";
+  // Force using local hero image to ensure the uploaded photo displays.
+  // If you want to restore the admin-configurable image, replace with:
+  // const heroImage = settings.heroImage || '/images/hero.jpeg';
+  const heroImage = '/images/hero.jpeg';
 
   return (
     <div className="flex flex-col w-full">
       <HeroSection 
         headline={headline}
         subheadline={subheadline}
-        ctaLabel="View Collection"
+        ctaLabel="VIEW COLLECTION"
         ctaHref="/catalogue"
         image={heroImage}
       />
