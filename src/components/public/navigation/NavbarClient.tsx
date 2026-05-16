@@ -11,6 +11,8 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === '/';
+  const isDarkText = isOpen || (!isHome && !isScrolled);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,24 +36,27 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
 
       <header className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300 w-full",
-        isScrolled 
+        (isScrolled && !isOpen)
           ? "bg-black/60 backdrop-blur-[12px] border-b border-[rgba(255,255,255,0.08)]" 
           : "bg-transparent border-transparent"
       )}>
-        <div className="w-full py-4 px-6 md:py-5 md:px-10 flex items-center justify-between text-white">
+        <div className={cn(
+          "w-full py-4 px-6 md:py-5 md:px-10 flex items-center justify-between transition-colors duration-300",
+          isDarkText ? "text-black" : "text-white"
+        )}>
           
-          {/* LEFT: Hamburger Menu */}
+          {/* LEFT: Hamburger Menu (Hidden on md and up) */}
           <div className="flex-1 flex justify-start">
             <button
-              className="p-1 relative z-[60]"
+              className="p-1 relative z-[60] md:hidden"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Close menu" : "Open menu"}
               aria-expanded={isOpen}
             >
               <div className="w-[22px] h-[14px] relative flex flex-col justify-between">
-                <span className={cn("block h-[1.5px] w-full bg-white transition-all duration-300", isOpen ? "rotate-45 translate-y-[6.25px]" : "")} />
-                <span className={cn("block h-[1.5px] w-full bg-white transition-all duration-300", isOpen ? "opacity-0" : "opacity-100")} />
-                <span className={cn("block h-[1.5px] w-full bg-white transition-all duration-300", isOpen ? "-rotate-45 -translate-y-[6.25px]" : "")} />
+                <span className={cn("block h-[1.5px] w-full transition-all duration-300", isDarkText ? "bg-black" : "bg-white", isOpen ? "rotate-45 translate-y-[6.25px]" : "")} />
+                <span className={cn("block h-[1.5px] w-full transition-all duration-300", isDarkText ? "bg-black" : "bg-white", isOpen ? "opacity-0" : "opacity-100")} />
+                <span className={cn("block h-[1.5px] w-full transition-all duration-300", isDarkText ? "bg-black" : "bg-white", isOpen ? "-rotate-45 -translate-y-[6.25px]" : "")} />
               </div>
             </button>
           </div>
@@ -75,7 +80,7 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
                 <circle cx="20" cy="20" r="1"/>
                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
               </svg>
-              <CartCountBadge />
+              <CartCountBadge isDarkText={isDarkText} />
             </Link>
           </div>
 
@@ -87,12 +92,15 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
   );
 }
 
-function CartCountBadge() {
+function CartCountBadge({ isDarkText }: { isDarkText: boolean }) {
   const { totalQty } = useCart();
   if (!totalQty) return null;
   return (
     <span 
-      className="absolute -top-1 -right-1 inline-flex items-center justify-center bg-white text-black font-semibold rounded-full"
+      className={cn(
+        "absolute -top-1 -right-1 inline-flex items-center justify-center font-semibold rounded-full",
+        isDarkText ? "bg-black text-white" : "bg-white text-black"
+      )}
       style={{ width: '16px', height: '16px', fontSize: '10px' }}
     >
       {totalQty}
