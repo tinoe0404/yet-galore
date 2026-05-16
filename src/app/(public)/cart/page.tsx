@@ -57,7 +57,7 @@ export default function CartPage() {
               <AnimatePresence mode="popLayout">
                 {items.map((it) => (
                   <motion.div
-                    key={it.productId}
+                    key={`${it.productId}-${it.size || 'default'}`}
                     layout
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -87,10 +87,13 @@ export default function CartPage() {
                               {it.name}
                             </h3>
                           </Link>
+                          {it.size && (
+                            <p className="font-sans text-xs tracking-widest text-muted mt-1 uppercase">Size: {it.size}</p>
+                          )}
                           <p className="font-mono text-sm text-muted mt-1">{formatCents(it.price)}</p>
                         </div>
                         <button
-                          onClick={() => removeItem(it.productId)}
+                          onClick={() => removeItem(`${it.productId}-${it.size || 'default'}`)}
                           className="p-1 text-muted hover:text-black transition-colors shrink-0"
                           aria-label={`Remove ${it.name}`}
                         >
@@ -102,7 +105,7 @@ export default function CartPage() {
                         {/* Quantity Control */}
                         <div className="flex items-center border border-border">
                           <button
-                            onClick={() => updateQty(it.productId, it.qty - 1)}
+                            onClick={() => updateQty(`${it.productId}-${it.size || 'default'}`, it.qty - 1)}
                             disabled={it.qty <= 1}
                             className="p-2 hover:bg-beige transition-colors disabled:opacity-30"
                             aria-label="Decrease quantity"
@@ -111,7 +114,7 @@ export default function CartPage() {
                           </button>
                           <span className="w-10 text-center font-sans text-sm">{it.qty}</span>
                           <button
-                            onClick={() => updateQty(it.productId, it.qty + 1)}
+                            onClick={() => updateQty(`${it.productId}-${it.size || 'default'}`, it.qty + 1)}
                             className="p-2 hover:bg-beige transition-colors"
                             aria-label="Increase quantity"
                           >

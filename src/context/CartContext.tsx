@@ -9,13 +9,14 @@ export interface CartItem {
   qty: number;
   image?: string;
   slug?: string;
+  size?: string;
 }
 
 interface CartContextValue {
   items: CartItem[];
   addItem: (item: CartItem) => void;
-  removeItem: (productId: string) => void;
-  updateQty: (productId: string, qty: number) => void;
+  removeItem: (id: string) => void;
+  updateQty: (id: string, qty: number) => void;
   clearCart: () => void;
   totalQty: number;
   totalPrice: number;
@@ -47,20 +48,21 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addItem = (item: CartItem) => {
     setItems((prev) => {
-      const exists = prev.find((p) => p.productId === item.productId);
+      const exists = prev.find((p) => p.productId === item.productId && p.size === item.size);
       if (exists) {
-        return prev.map((p) => p.productId === item.productId ? { ...p, qty: p.qty + item.qty } : p);
+        return prev.map((p) => (p.productId === item.productId && p.size === item.size) ? { ...p, qty: p.qty + item.qty } : p);
       }
       return [...prev, item];
     });
   };
 
-  const removeItem = (productId: string) => {
-    setItems((prev) => prev.filter((p) => p.productId !== productId));
+  const removeItem = (id: string) => {
+    // id is expected to be `${productId}-${size || 'default'}`
+    setItems((prev) => prev.filter((p) => `${p.productId}-${p.size || 'default'}` !== id));
   };
 
-  const updateQty = (productId: string, qty: number) => {
-    setItems((prev) => prev.map((p) => p.productId === productId ? { ...p, qty: Math.max(1, qty) } : p));
+  const updateQty = (id: string, qty: number) => {
+    setItems((prev) => prev.map((p) => `${p.productId}-${p.size || 'default'}` === id ? { ...p, qty: Math.max(1, qty) } : p));
   };
 
   const clearCart = () => setItems([]);

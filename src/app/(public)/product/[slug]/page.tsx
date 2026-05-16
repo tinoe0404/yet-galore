@@ -140,6 +140,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           {/* Actions */}
           <div className="space-y-4">
             <AddToCartButton
+              categoryName={product.category.name}
               product={{
                 id: product.id,
                 name: product.name,

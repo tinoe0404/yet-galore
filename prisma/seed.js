@@ -101,7 +101,8 @@ async function main() {
     { name: 'Bags', slug: 'bags', description: 'Functional luxury bags.' },
     { name: 'Handbags', slug: 'handbags', description: 'Elegant luxury handbags.' },
     { name: 'Frames', slug: 'frames', description: 'Statement eyewear and frames.' },
-    { name: 'Hats', slug: 'hats', description: 'Premium headwear and hats.' }
+    { name: 'Hats', slug: 'hats', description: 'Premium headwear and hats.' },
+    { name: 'Jerseys', slug: 'jerseys', description: 'Authentic sports and lifestyle jerseys.' }
   ];
 
   const dbCategories = {};
@@ -179,6 +180,18 @@ async function main() {
       name: 'Classic Tortoiseshell Frames',
       description: 'Vintage-inspired frames crafted from premium tortoiseshell material.',
       files: ['WhatsApp Image 2026-05-14 at 22.00.59 (2).jpeg', 'WhatsApp Image 2026-05-14 at 22.01.00 (2).jpeg']
+    },
+    {
+      category: 'Jerseys',
+      name: 'Classic Home Jersey',
+      description: 'The iconic home jersey, featuring breathable mesh and moisture-wicking technology.',
+      files: []
+    },
+    {
+      category: 'Jerseys',
+      name: 'Retro Away Jersey',
+      description: 'A throwback to the 90s era, this away jersey stands out with bold colors.',
+      files: []
     }
   ];
 
