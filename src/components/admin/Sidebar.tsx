@@ -12,7 +12,6 @@ const NAV_ITEMS = [
   { label: 'Products', href: '/admin/products', icon: ShoppingBag },
   { label: 'Categories', href: '/admin/categories', icon: Folders },
   { label: 'Enquiries', href: '/admin/enquiries', icon: Inbox },
-  { label: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
 export function Sidebar({ session }: { session: any }) {

@@ -30,8 +30,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/catalogue/jackets" className="text-cream hover:text-white transition-colors duration-200">
-                  Jackets
+                <Link href="/catalogue/jerseys" className="text-cream hover:text-white transition-colors duration-200">
+                  Jerseys
                 </Link>
               </li>
               <li>

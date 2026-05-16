@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Yet Galore | Luxury Fashion",
-  description: "Luxury fashion catalogue featuring premium handbags and jackets.",
+  description: "Luxury fashion catalogue featuring premium handbags and jerseys.",
 };
 
 import { NuqsAdapter } from 'nuqs/adapters/next/app';

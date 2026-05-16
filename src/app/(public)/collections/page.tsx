@@ -34,6 +34,13 @@ export default async function CollectionsPage() {
 
   return (
     <div className="w-full bg-background min-h-screen pt-20">
+      {/* Breadcrumbs */}
+      <nav className="container-wide px-6 lg:px-12 py-6 flex flex-wrap items-center gap-2 font-sans text-xs tracking-widest uppercase text-muted">
+        <Link href="/" className="hover:text-black transition-colors">Home</Link>
+        <span>/</span>
+        <span className="text-black">Collections</span>
+      </nav>
+
       {/* Header */}
       <div className="container-wide px-6 lg:px-12 py-12 md:py-20">
         <div className="text-center max-w-2xl mx-auto mb-16">
@@ -44,7 +51,7 @@ export default async function CollectionsPage() {
         </div>
 
         {/* Collections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
           {categories.map((cat) => {
             // Use category cover image, or fall back to first product's image
             const productImage = cat.products[0]?.images[0]?.url;
@@ -57,23 +64,24 @@ export default async function CollectionsPage() {
               <Link
                 key={cat.id}
                 href={`/catalogue/${cat.slug}`}
-                className="group relative block overflow-hidden bg-beige aspect-[4/5] md:aspect-[3/4]"
+                className="group block"
               >
-                <img
-                  src={imageUrl}
-                  alt={cat.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-                <div className="absolute inset-0 bg-black/20 transition-all duration-500 group-hover:bg-black/10" />
-
-                {/* Label */}
-                <div className="absolute inset-0 flex flex-col items-center justify-end pb-12 text-center">
-                  <h2 className="font-display italic text-4xl md:text-5xl text-white mb-2 drop-shadow-lg">
+                <div className="relative overflow-hidden bg-beige aspect-[4/5] md:aspect-[3/4] mb-6 border border-border/50">
+                  <img
+                    src={imageUrl}
+                    alt={cat.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                </div>
+                
+                {/* Label below image */}
+                <div className="flex items-center justify-between">
+                  <h2 className="font-display text-3xl md:text-4xl text-black">
                     {cat.name}
                   </h2>
-                  <span className="font-sans text-xs tracking-widest uppercase text-white/70">
+                  <span className="font-sans text-xs tracking-widest uppercase text-muted bg-beige px-3 py-1 border border-border">
                     {cat._count.products} {cat._count.products === 1 ? 'piece' : 'pieces'}
                   </span>
                 </div>

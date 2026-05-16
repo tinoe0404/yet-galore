@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 import { CatalogueView } from '@/components/public/catalogue/CatalogueView';
 import { notFound } from 'next/navigation';
 
-export const revalidate = 1800;
+export const dynamic = 'force-dynamic';
 
 export async function generateStaticParams() {
   const categories = await prisma.category.findMany({
@@ -39,5 +39,5 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
     })
   ]);
 
-  return <CatalogueView products={products.map(p => ({ ...p, price: p.price ? Number(p.price) : null }))} categories={categories} title={category.name} />;
+  return <CatalogueView products={products.map(p => ({ ...p, price: p.price ? Number(p.price) : null }))} categories={categories} title={category.name} categoryName={category.name} />;
 }

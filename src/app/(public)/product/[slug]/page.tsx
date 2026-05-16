@@ -7,7 +7,7 @@ import { ProductGallery } from '@/components/public/product/ProductGallery';
 import { ProductDetailsAccordion } from '@/components/public/product/ProductDetailsAccordion';
 import { RelatedProducts } from '@/components/public/product/RelatedProducts';
 import { ClientEnquiryTrigger } from '@/components/public/product/ClientEnquiryTrigger';
-import { AddToCartButton } from '@/components/public/product/AddToCartButton';
+import { ProductActions } from '@/components/public/product/ProductActions';
 import { DisplayText, BodyText } from '@/components/ui/Typography';
 import { formatPrice } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
@@ -139,7 +139,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
           {/* Actions */}
           <div className="space-y-4">
-            <AddToCartButton
+            <ProductActions
               categoryName={product.category.name}
               product={{
                 id: product.id,
@@ -149,17 +149,6 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
                 image: product.images[0]?.url,
               }}
             />
-            <ClientEnquiryTrigger product={{ id: product.id, name: product.name }} />
-            
-            <a 
-              href={`https://wa.me/123456789?text=Hi, I am interested in the ${product.name}`} 
-              target="_blank" 
-              rel="noreferrer"
-              className="group flex items-center justify-center gap-2 font-sans text-sm uppercase tracking-widest hover:text-black/70 transition-colors py-4"
-            >
-              Ask via WhatsApp
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
           </div>
 
         </div>

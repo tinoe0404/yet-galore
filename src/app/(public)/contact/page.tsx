@@ -61,8 +61,11 @@ export default function ContactPage() {
             </div>
 
             <div className="pt-8 border-t border-border">
-              <BodyText className="text-sm italic text-black/70">
+              <BodyText className="text-sm italic text-black/70 mb-2">
                 We respond to all enquiries within 24 hours during standard business days.
+              </BodyText>
+              <BodyText className="text-sm text-black/70">
+                Our team operates Monday – Friday, [9:00 AM] – [5:00 PM] [CAT].
               </BodyText>
             </div>
           </div>

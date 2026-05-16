@@ -3,9 +3,26 @@ import { FilterBar } from './FilterBar';
 import { ProductGrid } from './ProductGrid';
 import { DisplayText } from '@/components/ui/Typography';
 
-export function CatalogueView({ products, categories, title }: { products: any[], categories: any[], title: string }) {
+import Link from 'next/link';
+
+export function CatalogueView({ products, categories, title, categoryName }: { products: any[], categories: any[], title: string, categoryName?: string }) {
   return (
-    <div className="min-h-screen pt-24 bg-background">
+    <div className="min-h-screen pt-20 bg-background">
+      {/* Breadcrumbs */}
+      <nav className="container-wide px-6 lg:px-12 py-6 flex flex-wrap items-center gap-2 font-sans text-xs tracking-widest uppercase text-muted">
+        <Link href="/" className="hover:text-black transition-colors">Home</Link>
+        <span>/</span>
+        {categoryName ? (
+          <>
+            <Link href="/catalogue" className="hover:text-black transition-colors">Catalogue</Link>
+            <span>/</span>
+            <span className="text-black">{categoryName}</span>
+          </>
+        ) : (
+          <span className="text-black">Catalogue</span>
+        )}
+      </nav>
+
       {/* Page Header */}
       <div className="px-6 lg:px-12 text-center py-12">
         <DisplayText>{title}</DisplayText>

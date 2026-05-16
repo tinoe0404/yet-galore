@@ -30,7 +30,7 @@ export function ContactTeaser() {
           <Button variant="primary" onClick={() => router.push('/contact')}>
             Contact Us
           </Button>
-          <Button variant="outline" onClick={() => window.open('https://wa.me/123456789', '_blank')}>
+          <Button variant="outline" onClick={() => window.open('https://wa.me/263788346205', '_blank')}>
             WhatsApp Us
           </Button>
         </div>

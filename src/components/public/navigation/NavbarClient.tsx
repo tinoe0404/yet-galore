@@ -46,9 +46,9 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
 
         {/* Left nav links (compact for large screens) - HOME removed to reduce clutter */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="/catalogue" className={cn("font-sans text-sm tracking-wider uppercase", pathname?.startsWith('/catalogue') && 'underline')}>SHOP</Link>
-          <Link href="/about" className={cn("font-sans text-sm tracking-wider uppercase", pathname === '/about' && 'underline')}>ABOUT</Link>
-          <Link href="/collections" className={cn("font-sans text-sm tracking-wider uppercase", pathname?.startsWith('/collections') && 'underline')}>COLLECTIONS</Link>
+          <Link href="/catalogue" className={cn("font-sans text-sm tracking-wider uppercase transition-all", pathname?.startsWith('/catalogue') ? 'font-medium underline underline-offset-8' : 'hover:opacity-70')}>SHOP</Link>
+          <Link href="/about" className={cn("font-sans text-sm tracking-wider uppercase transition-all", pathname === '/about' ? 'font-medium underline underline-offset-8' : 'hover:opacity-70')}>ABOUT</Link>
+          <Link href="/collections" className={cn("font-sans text-sm tracking-wider uppercase transition-all", pathname?.startsWith('/collections') ? 'font-medium underline underline-offset-8' : 'hover:opacity-70')}>COLLECTIONS</Link>
         </nav>
 
         {/* Center logo */}

@@ -12,7 +12,7 @@ export default async function DashboardPage() {
   return (
     <DashboardClient
       stats={stats}
-      recentProducts={recentProducts}
+      recentProducts={recentProducts.map((p: any) => ({ ...p, price: p.price ? Number(p.price) : null }))}
       recentEnquiries={recentEnquiries}
     />
   );

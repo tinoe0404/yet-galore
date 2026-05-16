@@ -66,17 +66,15 @@ export default function CartPage() {
                     className="flex gap-6 py-8 border-b border-border"
                   >
                     {/* Image */}
-                    {it.image && (
-                      <Link href={`/product/${it.slug}`} className="shrink-0">
-                        <div className="w-24 h-28 md:w-32 md:h-36 bg-beige overflow-hidden">
-                          <img
-                            src={it.image}
-                            alt={it.name}
-                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                          />
-                        </div>
-                      </Link>
-                    )}
+                    <Link href={`/product/${it.slug}`} className="shrink-0">
+                      <div className="w-24 h-28 md:w-32 md:h-36 bg-beige overflow-hidden border border-border/50">
+                        <img
+                          src={it.image || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=800&auto=format&fit=crop'}
+                          alt={it.name}
+                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                      </div>
+                    </Link>
 
                     {/* Details */}
                     <div className="flex-1 flex flex-col justify-between min-w-0">
