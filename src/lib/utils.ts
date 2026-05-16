@@ -18,9 +18,9 @@ export function slugify(text: string) {
 }
 
 export function formatPrice(price: number | string | null | undefined, currency: string = 'USD') {
-  if (price === null || price === undefined) return null;
+  if (price === null || price === undefined) return "Price on request";
   const numPrice = typeof price === 'string' ? parseFloat(price) : price;
-  if (isNaN(numPrice)) return null;
+  if (isNaN(numPrice) || numPrice <= 10.00) return "Price on request";
 
   return new Intl.NumberFormat('en-US', {
     style: 'currency',

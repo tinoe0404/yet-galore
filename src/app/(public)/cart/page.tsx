@@ -6,6 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { Button } from '@/components/ui/Button';
 import { Minus, Plus, X, ArrowRight, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import siteProfile from '@/data/siteProfile.json';
 
 function formatCents(cents: number) {
   return new Intl.NumberFormat('en-US', {
@@ -17,6 +18,9 @@ function formatCents(cents: number) {
 
 export default function CartPage() {
   const { items, updateQty, removeItem, totalPrice, totalQty, clearCart } = useCart();
+
+  const orderMessage = `I'd like to order:\n${items.map(it => `- ${it.qty}x ${it.name}${it.size ? ` (Size: ${it.size})` : ''}`).join('\n')}`;
+  const whatsappCheckoutUrl = `${siteProfile.whatsapp}?text=${encodeURIComponent(orderMessage)}`;
 
   return (
     <div className="w-full bg-background min-h-screen pt-20">
@@ -167,12 +171,12 @@ export default function CartPage() {
                     </div>
                   </div>
 
-                  <Link href="/checkout" className="block">
+                  <a href={whatsappCheckoutUrl} target="_blank" rel="noreferrer" className="block">
                     <Button variant="primary" className="w-full py-5 text-sm tracking-widest group">
                       Proceed to Checkout
                       <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </Button>
-                  </Link>
+                  </a>
 
                   <Link
                     href="/catalogue"

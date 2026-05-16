@@ -11,7 +11,7 @@ export function HeroSection({ headline, subheadline, ctaLabel, ctaHref, image }:
   const router = useRouter();
   
   return (
-    <section className="relative min-h-screen w-full overflow-hidden">
+    <section className="relative h-[100dvh] w-full overflow-hidden">
       {/* Background image contained to the hero section so it scrolls away */}
       <div className="absolute inset-0 left-1/2 transform -translate-x-1/2 w-[100vw] h-full overflow-hidden">
         <img
@@ -26,7 +26,7 @@ export function HeroSection({ headline, subheadline, ctaLabel, ctaHref, image }:
       </div>
 
       {/* Centered content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-6 text-center">
+      <div className="relative z-10 flex items-center justify-center h-full px-6 text-center">
         <motion.div
           variants={heroContainer}
           initial="initial"

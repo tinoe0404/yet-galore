@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { formatPrice } from '@/lib/utils';
 
 interface ProductCardProps {
   product: any;
@@ -38,6 +39,9 @@ export function ProductCard({ product, variant = 'default', priority = false }: 
         </h3>
         <p className="font-sans text-xs text-muted tracking-widest uppercase">
           {product.category?.name || 'Category'}
+        </p>
+        <p className="font-mono text-sm tracking-wide mt-1">
+          {formatPrice(product.price ? Number(product.price) : null)}
         </p>
       </div>
     </Link>

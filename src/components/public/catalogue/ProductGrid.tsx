@@ -7,7 +7,7 @@ import { BodyText } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 
 export function ProductGrid({ initialProducts }: { initialProducts: any[] }) {
-  const [searchQuery, setSearchQuery] = useQueryState('search');
+  const [searchQuery, setSearchQuery] = useQueryState('q');
   const [sortValue] = useQueryState('sort');
 
   const filteredProducts = useMemo(() => {

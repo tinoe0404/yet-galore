@@ -116,10 +116,15 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
               {product.category.name}
             </span>
             <DisplayText as="h1" className="text-4xl md:text-5xl lg:text-6xl">{product.name}</DisplayText>
-            {product.price && (
-              <p className="font-mono text-lg tracking-wide pt-2">
-                {formatPrice(product.price.toNumber(), product.currency)}
-              </p>
+            {product.price !== null && product.price !== undefined && (
+              <div className="space-y-1 pt-2">
+                <p className="font-mono text-lg tracking-wide">
+                  {formatPrice(product.price.toNumber(), product.currency)}
+                </p>
+                <p className="font-sans text-xs text-muted italic">
+                  All prices are in USD. Contact us for local currency options.
+                </p>
+              </div>
             )}
           </div>
 

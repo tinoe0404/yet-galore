@@ -14,7 +14,7 @@ interface FilterBarProps {
 
 export function FilterBar({ categories }: FilterBarProps) {
   const pathname = usePathname();
-  const [searchQuery, setSearchQuery] = useQueryState('search', { defaultValue: '' });
+  const [searchQuery, setSearchQuery] = useQueryState('q', { defaultValue: '' });
   const [sortValue, setSortValue] = useQueryState('sort', { defaultValue: 'newest' });
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
 
