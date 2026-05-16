@@ -1,6 +1,6 @@
 'use client';
 import { useActionState, useState } from 'react';
-import { loginAction } from '@/actions/auth';
+import { loginAction } from '@/features/auth/actions';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Eye, EyeOff } from 'lucide-react';

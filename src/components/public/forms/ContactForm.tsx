@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { submitEnquiry } from '@/actions/enquiry';
+import { submitEnquiry } from '@/features/enquiries/public-actions';
 import { Heading, BodyText } from '@/components/ui/Typography';
 
 const contactSchema = z.object({

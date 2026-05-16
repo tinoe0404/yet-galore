@@ -8,6 +8,7 @@ import { modalBackdrop, adminModal } from '@/lib/animations';
 
 export function CategoriesClientView({ initialCategories }: { initialCategories: any[] }) {
   const [isCreating, setIsCreating] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<any>(null);
   const [newName, setNewName] = useState('');
   const [newDesc, setNewDesc] = useState('');
 
@@ -17,6 +18,25 @@ export function CategoriesClientView({ initialCategories }: { initialCategories:
     setNewName('');
     setNewDesc('');
     setIsCreating(false);
+  };
+
+  const handleUpdate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingCategory) return;
+    await updateCategory(editingCategory.id, { name: newName, description: newDesc });
+    setEditingCategory(null);
+  };
+
+  const openEditModal = (cat: any) => {
+    setEditingCategory(cat);
+    setNewName(cat.name);
+    setNewDesc(cat.description || '');
+  };
+
+  const openCreateModal = () => {
+    setNewName('');
+    setNewDesc('');
+    setIsCreating(true);
   };
 
   const handleToggleActive = async (id: string, current: boolean) => {
@@ -36,19 +56,22 @@ export function CategoriesClientView({ initialCategories }: { initialCategories:
   return (
     <div className="space-y-6">
       <div className="flex justify-end">
-        <Button onClick={() => setIsCreating(true)}>+ New Category</Button>
+        <Button onClick={openCreateModal}>+ New Category</Button>
       </div>
 
       {/* Modal with AnimatePresence */}
       <AnimatePresence>
-        {isCreating && (
+        {(isCreating || editingCategory) && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <motion.div
               variants={modalBackdrop}
               initial="initial"
               animate="animate"
               exit="exit"
-              onClick={() => setIsCreating(false)}
+              onClick={() => {
+                setIsCreating(false);
+                setEditingCategory(null);
+              }}
               className="absolute inset-0 bg-black/50"
             />
             <motion.form
@@ -56,10 +79,10 @@ export function CategoriesClientView({ initialCategories }: { initialCategories:
               initial="initial"
               animate="animate"
               exit="exit"
-              onSubmit={handleCreate}
+              onSubmit={isCreating ? handleCreate : handleUpdate}
               className="relative bg-white p-8 w-full max-w-md space-y-6 shadow-xl"
             >
-              <h2 className="font-display text-2xl">Create Category</h2>
+              <h2 className="font-display text-2xl">{isCreating ? 'Create Category' : 'Edit Category'}</h2>
               <Input 
                 label="Name" 
                 value={newName} 
@@ -76,8 +99,8 @@ export function CategoriesClientView({ initialCategories }: { initialCategories:
                 />
               </div>
               <div className="flex gap-4 pt-4">
-                <Button type="button" variant="outline" className="flex-1" onClick={() => setIsCreating(false)}>Cancel</Button>
-                <Button type="submit" variant="primary" className="flex-1">Create</Button>
+                <Button type="button" variant="outline" className="flex-1" onClick={() => { setIsCreating(false); setEditingCategory(null); }}>Cancel</Button>
+                <Button type="submit" variant="primary" className="flex-1">{isCreating ? 'Create' : 'Save Changes'}</Button>
               </div>
             </motion.form>
           </div>
@@ -109,10 +132,16 @@ export function CategoriesClientView({ initialCategories }: { initialCategories:
                     <span className={`absolute top-1 left-1 bg-white w-3 h-3 rounded-full transition-transform ${cat.isActive ? 'translate-x-5' : ''}`} />
                   </button>
                 </td>
-                <td className="px-6 py-4 text-right">
+                <td className="px-6 py-4 flex justify-end items-center gap-3">
+                  <button 
+                    onClick={() => openEditModal(cat)}
+                    className="text-black hover:text-black/70 text-xs tracking-widest uppercase transition-colors"
+                  >
+                    Edit
+                  </button>
                   <button 
                     onClick={() => handleDelete(cat.id)}
-                    className="text-red-500 hover:text-red-700 text-xs tracking-widest uppercase disabled:opacity-50"
+                    className="text-red-500 hover:text-red-700 text-xs tracking-widest uppercase disabled:opacity-50 transition-colors"
                     disabled={cat._count.products > 0}
                     title={cat._count.products > 0 ? 'Cannot delete category with products' : 'Delete'}
                   >

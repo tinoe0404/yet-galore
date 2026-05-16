@@ -5,7 +5,7 @@ import { X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Heading, BodyText } from '@/components/ui/Typography';
-import { submitEnquiry } from '@/actions/enquiry';
+import { submitEnquiry } from '@/features/enquiries/public-actions';
 import { modalBackdrop, modalContentDesktop, modalContentMobile } from '@/lib/animations';
 
 export function EnquiryModal({ isOpen, onClose, product }: { isOpen: boolean; onClose: () => void; product: any }) {
