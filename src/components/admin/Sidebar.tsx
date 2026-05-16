@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, ShoppingBag, Folders, Inbox, Settings, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, ShoppingBag, Folders, Inbox, Settings, LogOut, Menu, X, Receipt } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { signOut } from 'next-auth/react';
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+  { label: 'Orders', href: '/admin/orders', icon: Receipt },
   { label: 'Products', href: '/admin/products', icon: ShoppingBag },
   { label: 'Categories', href: '/admin/categories', icon: Folders },
   { label: 'Enquiries', href: '/admin/enquiries', icon: Inbox },

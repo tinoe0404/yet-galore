@@ -76,33 +76,7 @@ export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps)
           exit="exit"
           className="fixed inset-0 z-40 bg-cream pt-24 px-6 flex flex-col"
         >
-          {/* Top header with back button */}
-          <div className="absolute top-4 left-0 right-0 px-6 flex items-center justify-between">
-            <button
-              onClick={() => {
-                // Prefer navigating back if there's history, otherwise just close the menu
-                try {
-                  if (window.history.length > 1) {
-                    router.back();
-                  } else {
-                    onClose();
-                  }
-                } catch (e) {
-                  onClose();
-                }
-              }}
-              aria-label="Back"
-              className="p-2 text-black"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
 
-            <div className="flex-1 flex justify-center">
-              <Logo variant="dark" asLink={false} className="!w-[160px]" />
-            </div>
-
-            <div className="w-8" />
-          </div>
           <motion.nav 
             variants={mobileMenuStagger}
             initial="initial"
@@ -110,11 +84,7 @@ export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps)
             exit="exit"
             className="flex flex-col gap-6 mt-12"
           >
-            <motion.div variants={mobileMenuItem}>
-              <Link href="/" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
-                HOME
-              </Link>
-            </motion.div>
+
 
             <motion.div variants={mobileMenuItem}>
               <Link href="/catalogue" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
@@ -122,14 +92,7 @@ export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps)
               </Link>
             </motion.div>
 
-            {/* List categories under SHOP */}
-            {categories.map((c) => (
-              <motion.div key={c.slug} variants={mobileMenuItem}>
-                <Link href={`/catalogue/${c.slug}`} className="font-display text-3xl tracking-tight text-black pl-4" onClick={onClose}>
-                  {c.name}
-                </Link>
-              </motion.div>
-            ))}
+
 
             <motion.div variants={mobileMenuItem}>
               <Link href="/about" className="font-display text-4xl tracking-tight text-black" onClick={onClose}>
@@ -149,17 +112,7 @@ export function MobileMenu({ id, isOpen, categories, onClose }: MobileMenuProps)
               </Link>
             </motion.div>
 
-            <motion.div variants={mobileMenuItem} className="mt-8">
-              <div className="flex items-center gap-6">
-                <Link href="/account" aria-label="Account" className="opacity-90 hover:opacity-70">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </Link>
-                <Link href="/search" aria-label="Search" className="opacity-90 hover:opacity-70">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                </Link>
-                <CartLinkMobile />
-              </div>
-            </motion.div>
+
           </motion.nav>
 
           <motion.div 

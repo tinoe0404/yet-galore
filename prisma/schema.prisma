@@ -7,10 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ─────────────────────────────────────────
-// ADMIN USER
-// Single-admin system. No user self-registration.
-// ─────────────────────────────────────────
 model AdminUser {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -22,56 +18,41 @@ model AdminUser {
   @@map("admin_users")
 }
 
-// ─────────────────────────────────────────
-// CATEGORY
-// Handbags, Jackets, etc.
-// ─────────────────────────────────────────
 model Category {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  slug        String    @unique
-  description String?
-  coverImage  String?   // R2 URL
-  displayOrder Int      @default(0)
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  products    Product[]
+  id           String    @id @default(cuid())
+  name         String    @unique
+  slug         String    @unique
+  description  String?
+  coverImage   String?
+  displayOrder Int       @default(0)
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  products     Product[]
 
   @@map("categories")
 }
 
-// ─────────────────────────────────────────
-// PRODUCT
-// Core catalogue item.
-// ─────────────────────────────────────────
 model Product {
-  id           String         @id @default(cuid())
-  name         String
-  slug         String         @unique
-  description  String
-  details      String?        // Rich text: materials, dimensions, care
-  price        Decimal?       @db.Decimal(10, 2)  // Optional display price
-  currency     String         @default("USD")
-  isFeatured   Boolean        @default(false)
-  isPublished  Boolean        @default(true)
-  displayOrder Int            @default(0)
-
-  // Relationships
-  categoryId   String
-  category     Category       @relation(fields: [categoryId], references: [id])
-  images       ProductImage[]
-  enquiries    Enquiry[]
-  orderItems   OrderItem[]
-
-  // SEO
+  id              String         @id @default(cuid())
+  name            String
+  slug            String         @unique
+  description     String
+  details         String?
+  price           Decimal?       @db.Decimal(10, 2)
+  currency        String         @default("USD")
+  isFeatured      Boolean        @default(false)
+  isPublished     Boolean        @default(true)
+  displayOrder    Int            @default(0)
+  categoryId      String
   metaTitle       String?
   metaDescription String?
-
-  // Timestamps
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  enquiries       Enquiry[]
+  orderItems      OrderItem[]
+  images          ProductImage[]
+  category        Category       @relation(fields: [categoryId], references: [id])
 
   @@index([categoryId])
   @@index([slug])
@@ -80,59 +61,97 @@ model Product {
   @@map("products")
 }
 
-// ─────────────────────────────────────────
-// PRODUCT IMAGE
-// Multiple images per product via R2.
-// ─────────────────────────────────────────
 model ProductImage {
   id           String   @id @default(cuid())
   productId    String
-  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  url          String   // R2 delivery URL
-  publicId     String   // R2 object key (for deletion)
+  url          String
+  publicId     String
   altText      String?
   width        Int?
   height       Int?
   isPrimary    Boolean  @default(false)
   displayOrder Int      @default(0)
-
   createdAt    DateTime @default(now())
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([productId])
   @@map("product_images")
 }
 
-// ─────────────────────────────────────────
-// ENQUIRY
-// Product or general contact enquiries.
-// ─────────────────────────────────────────
 model Enquiry {
   id          String        @id @default(cuid())
   type        EnquiryType   @default(GENERAL)
-
-  // Contact info
   name        String
   email       String
   phone       String?
   message     String
-
-  // Optional product reference
   productId   String?
-  product     Product?      @relation(fields: [productId], references: [id], onDelete: SetNull)
-  productName String?       // Snapshot in case product is deleted
-
-  // Status
+  productName String?
   status      EnquiryStatus @default(UNREAD)
   adminNotes  String?
-
-  // Timestamps
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  product     Product?      @relation(fields: [productId], references: [id])
 
   @@index([status])
   @@index([productId])
   @@map("enquiries")
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String   @unique
+  url       String
+  handle    String?
+  isActive  Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+
+  @@map("social_links")
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  type      String   @default("string")
+  updatedAt DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  externalId String      @unique
+  name       String
+  email      String
+  phone      String?
+  address    String?
+  notes      String?
+  status     OrderStatus @default(PENDING)
+  totalCents Int         @default(0)
+  emailSent  Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  items      OrderItem[]
+
+  @@index([email])
+  @@index([externalId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String?
+  name      String
+  price     Decimal  @db.Decimal(10, 2)
+  qty       Int      @default(1)
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product? @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@map("order_items")
 }
 
 enum EnquiryType {
@@ -148,74 +167,6 @@ enum EnquiryStatus {
   ARCHIVED
 }
 
-// ─────────────────────────────────────────
-// SOCIAL LINKS
-// Managed from admin dashboard.
-// ─────────────────────────────────────────
-model SocialLink {
-  id        String   @id @default(cuid())
-  platform  String   @unique  // "instagram", "tiktok", "whatsapp"
-  url       String
-  handle    String?
-  isActive  Boolean  @default(true)
-  updatedAt DateTime @updatedAt
-
-  @@map("social_links")
-}
-
-// ─────────────────────────────────────────
-// SITE SETTINGS
-// Key-value store for global settings.
-// ─────────────────────────────────────────
-model SiteSetting {
-  id        String   @id @default(cuid())
-  key       String   @unique
-  value     String
-  type      String   @default("string") // "string" | "boolean" | "json"
-  updatedAt DateTime @updatedAt
-
-  @@map("site_settings")
-}
-
-// ─────────────────────────────────────────
-// ORDER
-// ─────────────────────────────────────────
-model Order {
-  id          String      @id @default(cuid())
-  externalId  String      @unique // Friendly ID, e.g., ORD-12345
-  name        String
-  email       String
-  phone       String?
-  address     String?
-  notes       String?
-  status      OrderStatus @default(PENDING)
-  totalCents  Int         @default(0)
-  emailSent   Boolean     @default(false)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-
-  items       OrderItem[]
-
-  @@index([email])
-  @@index([externalId])
-  @@index([status])
-  @@map("orders")
-}
-
-model OrderItem {
-  id          String   @id @default(cuid())
-  orderId     String
-  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  productId   String?
-  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
-  name        String   // Snapshot
-  price       Decimal  @db.Decimal(10, 2)
-  qty         Int      @default(1)
-  
-  @@index([orderId])
-  @@map("order_items")
-}
-
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -223,4 +174,3 @@ enum OrderStatus {
   FULFILLED
   CANCELLED
 }
-
