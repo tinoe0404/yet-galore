@@ -1,8 +1,16 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: Number(process.env.SMTP_PORT) === 465, // true for 465, false for other ports
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
+const FROM_EMAIL = process.env.SMTP_FROM_EMAIL || 'no-reply@yetgalore.com';
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@yetgalore.com';
 
 interface OrderEmailData {
@@ -102,7 +110,7 @@ export async function sendOrderEmails(data: OrderEmailData) {
   const html = orderEmailHtml(data);
 
   // Send to customer
-  const customerResult = await resend.emails.send({
+  const customerResult = await transporter.sendMail({
     from: FROM_EMAIL,
     to: data.email,
     subject: `Order Confirmed — ${data.orderId} | Yet Galore`,
@@ -115,7 +123,7 @@ export async function sendOrderEmails(data: OrderEmailData) {
     `New order from <strong>${data.name}</strong> (${data.email}${data.phone ? ', ' + data.phone : ''}).`
   );
 
-  const adminResult = await resend.emails.send({
+  const adminResult = await transporter.sendMail({
     from: FROM_EMAIL,
     to: ADMIN_EMAIL,
     subject: `New Order — ${data.orderId} from ${data.name}`,
