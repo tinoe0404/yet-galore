@@ -90,16 +90,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }} />
 
-      {/* Breadcrumbs */}
-      <nav className="container-wide px-6 lg:px-12 py-6 flex flex-wrap items-center gap-2 font-sans text-xs tracking-widest uppercase text-muted">
-        <Link href="/" className="hover:text-black transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/catalogue" className="hover:text-black transition-colors">Catalogue</Link>
-        <span>/</span>
-        <Link href={`/catalogue/${product.category.slug}`} className="hover:text-black transition-colors">{product.category.name}</Link>
-        <span>/</span>
-        <span className="text-black">{product.name}</span>
-      </nav>
+
 
       {/* Main Layout */}
       <main className="container-wide px-6 lg:px-12 py-8 lg:py-12 flex flex-col lg:flex-row gap-12 lg:gap-24">

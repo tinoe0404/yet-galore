@@ -18,37 +18,17 @@ export function AboutClientView() {
 
   return (
     <div className="w-full bg-background min-h-screen">
-      {/* 1. Hero — absolute fill inside h-[70vh] wrapper */}
-      <section className="relative w-full h-[70vh] bg-beige flex items-center justify-center overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2000&auto=format&fit=crop" 
-          alt="Yet Galore Editorial" 
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/20" />
+      {/* 1. Header & Brand Statement */}
+      <section className="pt-40 pb-24 md:pt-48 md:pb-32 px-6 container-wide text-center">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: EASE_SMOOTH }}
-          className="relative z-10 text-center"
+          transition={{ duration: 0.8, ease: EASE_SMOOTH }}
         >
-          <DisplayText as="h1" className="text-cream text-5xl md:text-7xl italic">Our Story</DisplayText>
-        </motion.div>
-      </section>
-
-      {/* 2. Brand Statement */}
-      <section className="py-24 md:py-32 px-6 container-wide">
-        <motion.div 
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={fadeUp}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <h2 className="font-display italic text-3xl md:text-4xl lg:text-5xl leading-tight opacity-90">
+          <span className="font-sans text-xs tracking-widest uppercase text-muted mb-8 block">Our Story</span>
+          <h1 className="font-display italic text-3xl md:text-4xl lg:text-5xl leading-tight opacity-90 max-w-3xl mx-auto">
             {`"${siteProfile.tagline}"`}
-          </h2>
+          </h1>
         </motion.div>
       </section>
 
@@ -87,7 +67,7 @@ export function AboutClientView() {
           >
             <motion.div style={{ y: storyImageY }} className="absolute inset-0">
               <img 
-                src="https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=1000&auto=format&fit=crop" 
+                src="/images/yet.jpeg" 
                 alt="Craftsmanship Details" 
                 loading="lazy"
                 decoding="async"

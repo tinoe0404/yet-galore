@@ -45,8 +45,9 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
           isDarkText ? "text-black" : "text-white"
         )}>
           
-          {/* LEFT: Hamburger Menu (Hidden on md and up) */}
-          <div className="flex-1 flex justify-start">
+          {/* LEFT: Menu / Navigation */}
+          <div className="flex-1 flex justify-start items-center gap-8">
+            {/* Hamburger (Mobile) */}
             <button
               className="p-1 relative z-[60] md:hidden"
               onClick={() => setIsOpen(!isOpen)}
@@ -59,6 +60,13 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
                 <span className={cn("block h-[1.5px] w-full transition-all duration-300", isDarkText ? "bg-black" : "bg-white", isOpen ? "-rotate-45 -translate-y-[6.25px]" : "")} />
               </div>
             </button>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-8">
+              <Link href="/catalogue" className="font-sans text-xs tracking-widest uppercase hover:opacity-70 transition-opacity">Shop</Link>
+              <Link href="/about" className="font-sans text-xs tracking-widest uppercase hover:opacity-70 transition-opacity">About</Link>
+              <Link href="/collections" className="font-sans text-xs tracking-widest uppercase hover:opacity-70 transition-opacity">Collections</Link>
+            </nav>
           </div>
 
           {/* CENTRE: Brand Name */}
@@ -66,7 +74,7 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
             <Link 
               href="/" 
               onClick={() => setIsOpen(false)}
-              className="font-display tracking-[0.25em] text-[0.9rem] md:text-[1rem] font-normal uppercase text-white hover:opacity-80 transition-opacity"
+              className="font-display tracking-[0.25em] text-[0.9rem] md:text-[1rem] font-normal uppercase hover:opacity-80 transition-opacity"
             >
               YETGALORE
             </Link>
@@ -74,7 +82,7 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
 
           {/* RIGHT: Cart */}
           <div className="flex-1 flex justify-end">
-            <Link href="/cart" aria-label="Cart" onClick={() => setIsOpen(false)} className="relative p-1 hover:opacity-70 transition-opacity text-white">
+            <Link href="/cart" aria-label="Cart" onClick={() => setIsOpen(false)} className="relative p-1 hover:opacity-70 transition-opacity">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="9" cy="20" r="1"/>
                 <circle cx="20" cy="20" r="1"/>

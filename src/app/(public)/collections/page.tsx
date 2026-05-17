@@ -34,12 +34,7 @@ export default async function CollectionsPage() {
 
   return (
     <div className="w-full bg-background min-h-screen pt-20">
-      {/* Breadcrumbs */}
-      <nav className="container-wide px-6 lg:px-12 py-6 flex flex-wrap items-center gap-2 font-sans text-xs tracking-widest uppercase text-muted">
-        <Link href="/" className="hover:text-black transition-colors">Home</Link>
-        <span>/</span>
-        <span className="text-black">Collections</span>
-      </nav>
+
 
       {/* Header */}
       <div className="container-wide px-6 lg:px-12 py-12 md:py-20">
