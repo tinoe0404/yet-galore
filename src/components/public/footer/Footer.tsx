@@ -34,6 +34,9 @@ export function Footer() {
             <p className="font-display italic text-xl tracking-wide max-w-xs text-cream/90">
               Curated luxury essentials for the modern aesthetic.
             </p>
+            <p className="font-sans text-sm text-cream/60">
+              Victoria Falls, Zimbabwe
+            </p>
           </div>
 
           {/* Column 2 - Catalogue */}

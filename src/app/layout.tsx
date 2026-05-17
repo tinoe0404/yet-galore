@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Yet Galore | Luxury Fashion",
-  description: "Luxury fashion catalogue featuring premium handbags and jerseys.",
+  description: "Intentional fashion rooted in culture and craftsmanship. Based in Victoria Falls, Zimbabwe.",
 };
 
 import { NuqsAdapter } from 'nuqs/adapters/next/app';

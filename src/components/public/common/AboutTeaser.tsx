@@ -50,10 +50,7 @@ export function AboutTeaser() {
           <Subheading>The Yet Galore Story</Subheading>
           <div className="space-y-6">
             <BodyText>
-              Founded on the principles of restraint and uncompromising quality, Yet Galore is a curated catalogue of luxury essentials. We believe that true luxury lies in the details—the precision of a stitch, the weight of a fabric, and the timelessness of a silhouette.
-            </BodyText>
-            <BodyText>
-              Our collection is meticulously selected for individuals who appreciate the quiet confidence of well-made garments.
+              Yet Galore is a reflection of intentional creation rooted in culture, environment, and identity. Based in Victoria Falls, Zimbabwe, the brand blends raw expression with refined construction to create garments that feel both personal and timeless.
             </BodyText>
           </div>
           <div className="pt-4">

@@ -45,13 +45,13 @@ export function AboutClientView() {
             <Heading>The Origin</Heading>
             <div className="space-y-6">
               <BodyText className="leading-relaxed">
-                In a world characterized by fleeting trends and disposable consumption, Yet Galore stands as a bastion of permanence. Our journey began with a simple observation: true luxury is quiet. It doesn't need to shout to be recognized.
+                Yet Galore is built on the idea that clothing should carry meaning. Every garment is created with intention, reflecting a process that values time, effort, and authenticity. Based in Victoria Falls, Zimbabwe, the brand draws from the intersection of tourism and local life — where movement, storytelling, and craftsmanship meet.
               </BodyText>
               <BodyText className="leading-relaxed">
-                Our aesthetic values are deeply rooted in the concept of restraint. We believe that design is complete not when there is nothing left to add, but when there is nothing left to take away. Every piece in our catalogue is rigorously selected to meet this uncompromising standard.
+                Materials are carefully considered, often repurposed and reworked to give them new life. Through dyeing, layering, and reconstruction, each fabric develops its own character. This commitment to sustainability means garments are not mass-produced but thoughtfully made, carrying the marks of their making.
               </BodyText>
               <BodyText className="leading-relaxed">
-                We partner exclusively with artisans who share our philosophy. For us, craftsmanship is not merely a manufacturing process—it is an art form that requires time, intention, and profound respect for the materials.
+                Our work explores the balance between process and product, allowing the journey of creation to exist just as boldly as the final piece.
               </BodyText>
             </div>
           </motion.div>
@@ -83,9 +83,9 @@ export function AboutClientView() {
         <div className="container-wide">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 divide-y md:divide-y-0 md:divide-x divide-cream/20">
             {[
-              { title: 'Quality', desc: 'We utilize only the finest materials, ensuring every garment endures through seasons and generations.' },
-              { title: 'Restraint', desc: 'Our designs strip away the unnecessary, leaving only silhouettes of profound elegance and purpose.' },
-              { title: 'Intention', desc: 'Every detail is considered. There are no accidents in our curation, only deliberate aesthetic choices.' },
+              { title: 'Sustainability', desc: 'Materials are repurposed and reworked with care, reducing waste and giving fabric new life.' },
+              { title: 'Craftsmanship', desc: 'Each seam and detail is considered — the hand behind the garment is never concealed.' },
+              { title: 'Intention', desc: 'Every piece begins as an idea shaped by observation and experimentation. Nothing is fixed, everything is explored.' },
             ].map((value, idx) => (
               <motion.div 
                 key={value.title}
@@ -103,6 +103,50 @@ export function AboutClientView() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* 4.5 The Process */}
+      <section className="container-wide px-6 lg:px-12 py-20 md:py-32">
+        <motion.div 
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp}
+          className="max-w-3xl mx-auto space-y-8 text-center md:text-left"
+        >
+          <Heading>The Process</Heading>
+          <div className="space-y-6 text-left">
+            <BodyText className="leading-relaxed">
+              Every piece begins as an idea shaped by observation and experimentation. From the first sketch to the selection of fabric, the process is guided by instinct and curiosity. Dyed textiles, raw cuts, and unstructured forms mark the early stages of creation — where nothing is fixed and everything is explored.
+            </BodyText>
+            <BodyText className="leading-relaxed">
+              The stitchings remain deliberately exposed, forming a quiet dialogue between precision and process. Each seam is left visible with intent, revealing the hand behind the garment rather than concealing it. This rawness is not a flaw — it is a signature.
+            </BodyText>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* 4.6 Cultural Presence */}
+      <section className="bg-beige py-24 px-6 lg:px-12">
+        <motion.div 
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={fadeUp}
+          className="container-wide max-w-4xl mx-auto space-y-8 text-center md:text-left"
+        >
+          <Heading>Cultural & Event Presence</Heading>
+          <BodyText className="leading-relaxed text-left md:text-center max-w-3xl mx-auto">
+            Yet Galore exists within a growing creative landscape. Through showcases at Zimbabwe Fashion Week, Creative Economy Week, and Fabrik Party, the brand continues to engage with a wider audience while staying connected to its roots. These moments reflect not only progress but also the importance of community, collaboration, and representation within the fashion space.
+          </BodyText>
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-6">
+            {["Zimbabwe Fashion Week", "Creative Economy Week", "Fabrik Party", "Skeyiandstrobo"].map((event) => (
+              <span key={event} className="px-4 py-2 border border-black/20 rounded-full font-sans text-[13px] text-black tracking-wider uppercase">
+                {event}
+              </span>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       {/* 5. CTA */}
