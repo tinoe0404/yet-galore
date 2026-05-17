@@ -32,7 +32,7 @@ export default function ShippingReturnsPage() {
           <section className="space-y-6">
             <Heading as="h2">Returns</Heading>
             <BodyText className="leading-relaxed">
-              We accept returns within 14 days of delivery. Items must be unworn and in original packaging. Contact enquiries@yetgalore.com to initiate a return.
+              We accept returns within 14 days of delivery. Items must be unworn and in original packaging. Contact <a href="mailto:[xavidasante@gmail.com]">[xavidasante@gmail.com]</a> to initiate a return.
             </BodyText>
           </section>
 

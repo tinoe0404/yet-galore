@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar } from '@/components/public/navigation/Navbar';
 import { Footer } from '@/components/public/footer/Footer';
 import { AnimatedLayout } from '@/components/public/common/AnimatedLayout';
+import { WhatsAppWidget } from '@/components/public/common/WhatsAppWidget';
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           {children}
         </AnimatedLayout>
       </main>
+      <WhatsAppWidget />
       <Footer />
     </>
   );
