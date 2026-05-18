@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useSelectedLayoutSegment } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { MobileMenu } from './MobileMenu';
 import { useCart } from '@/context/CartContext';
@@ -10,8 +10,8 @@ import { useCart } from '@/context/CartContext';
 export function NavbarClient({ categories }: { categories: { name: string; slug: string }[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === '/';
+  const segment = useSelectedLayoutSegment();
+  const isHome = segment === null || segment === '(public)' || segment === ''; 
   const isDarkText = isOpen || !isHome;
 
   useEffect(() => {
