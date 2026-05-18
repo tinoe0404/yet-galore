@@ -12,7 +12,7 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === '/';
-  const isDarkText = isOpen || (!isHome && !isScrolled);
+  const isDarkText = isOpen || !isHome;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,7 +37,9 @@ export function NavbarClient({ categories }: { categories: { name: string; slug:
       <header className={cn(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300 w-full",
         (isScrolled && !isOpen)
-          ? "bg-black/60 backdrop-blur-[12px] border-b border-[rgba(255,255,255,0.08)]" 
+          ? isHome 
+            ? "bg-black/60 backdrop-blur-[12px] border-b border-[rgba(255,255,255,0.08)]"
+            : "bg-white/90 backdrop-blur-[12px] border-b border-black/5"
           : "bg-transparent border-transparent"
       )}>
         <div className={cn(
