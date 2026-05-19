@@ -16,6 +16,7 @@ export interface CollectionSlideData {
   image: string;
 }
 
+
 interface SnapScrollContainerProps {
   heroHeadline: string;
   heroSubheadline: string;
