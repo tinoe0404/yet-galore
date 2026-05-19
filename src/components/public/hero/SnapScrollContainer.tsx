@@ -24,6 +24,8 @@ interface SnapScrollContainerProps {
   collections: CollectionSlideData[];
 }
 
+
+
 /**
  * Fullscreen vertical snap-scroll container.
  *
