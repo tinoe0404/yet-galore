@@ -42,10 +42,6 @@
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
@@ -57,4 +53,37 @@ html, body {
   overflow-x: hidden;
 }
 
-/* (reverted) full-screen utility removed — restoring original globals */
+/* ─────────────────────────────────────────────────────────────────────
+   CINEMATIC SNAP-SCROLL SYSTEM
+   
+   The homepage uses CSS scroll-snap for buttery smooth, native-level
+   section snapping. No JavaScript scroll hijacking needed.
+   
+   .snap-container  →  The outer scrollable viewport (100dvh)
+   .snap-section    →  Each fullscreen collection slide
+   ───────────────────────────────────────────────────────────────────── */
+
+.snap-container {
+  height: 100vh;
+  height: 100dvh;           /* Dynamic viewport height — no mobile address bar issues */
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;  /* Momentum scrolling on iOS */
+  overscroll-behavior: contain;       /* Prevent overscroll bounce */
+}
+
+.snap-section {
+  height: 100vh;
+  height: 100dvh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;  /* Force stop at every section */
+}
+
+/* Hide scrollbar for the cinematic experience */
+.snap-container::-webkit-scrollbar {
+  display: none;
+}
+.snap-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

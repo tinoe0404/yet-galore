@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar } from '@/components/public/navigation/Navbar';
-import { Footer } from '@/components/public/footer/Footer';
+import { FooterWrapper } from '@/components/public/footer/FooterWrapper';
 import { AnimatedLayout } from '@/components/public/common/AnimatedLayout';
 import { WhatsAppWidget } from '@/components/public/common/WhatsAppWidget';
 
@@ -14,7 +14,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         </AnimatedLayout>
       </main>
       <WhatsAppWidget />
-      <Footer />
+      <FooterWrapper />
     </>
   );
 }
