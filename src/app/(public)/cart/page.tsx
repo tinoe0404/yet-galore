@@ -68,11 +68,13 @@ export default function CartPage() {
                     {/* Image */}
                     <Link href={`/product/${it.slug}`} className="shrink-0">
                       <div className="w-24 h-28 md:w-32 md:h-36 bg-beige overflow-hidden border border-border/50">
-                        <img
-                          src={it.image || 'https://images.unsplash.com/photo-1591561954557-26941169b49e?q=80&w=800&auto=format&fit=crop'}
-                          alt={it.name}
-                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                        />
+                        {it.image && (
+                          <img
+                            src={it.image}
+                            alt={it.name}
+                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                          />
+                        )}
                       </div>
                     </Link>
 
