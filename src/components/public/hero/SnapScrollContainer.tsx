@@ -122,7 +122,7 @@ export function SnapScrollContainer({
       ))}
 
       {/* Footer as the final snap section */}
-      <div className="snap-section h-auto min-h-screen bg-charcoal">
+      <div className="snap-start snap-always w-full bg-charcoal">
         <Footer />
       </div>
 

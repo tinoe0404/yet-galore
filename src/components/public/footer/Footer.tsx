@@ -1,32 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Truck, RefreshCw, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Logo } from '@/components/common/Logo';
 import siteProfile from '@/data/siteProfile.json';
 
 export function Footer() {
   return (
-    <footer className="bg-charcoal text-cream pt-20 pb-8 px-6 lg:px-12">
-      <div className="max-w-7xl mx-auto">
+    <footer className="bg-charcoal text-cream pt-20 pb-8 px-6 lg:px-12 min-h-[100dvh] flex flex-col">
+      <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col">
         
-        {/* Trust Bar */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-16 mb-16 border-b border-cream/10 text-cream/90 font-sans text-sm tracking-wide text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start gap-4">
-            <RefreshCw className="w-5 h-5 text-cream/60" />
-            <span>Free returns within 14 days</span>
-          </div>
-          <div className="flex items-center justify-center md:justify-center gap-4">
-            <Truck className="w-5 h-5 text-cream/60" />
-            <span>Worldwide shipping</span>
-          </div>
-          <div className="flex items-center justify-center md:justify-end gap-4">
-            <ShieldCheck className="w-5 h-5 text-cream/60" />
-            <span>Secure checkout</span>
-          </div>
-        </div>
-
-        {/* 4-column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-20">
+        <div className="flex-grow flex items-center py-12">
+          {/* 4-column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 w-full">
           
           {/* Column 1 - Brand */}
           <div className="space-y-6">
@@ -111,10 +96,11 @@ export function Footer() {
             </ul>
           </div>
 
+          </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 font-sans text-xs text-cream/50 border-t border-cream/10">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 font-sans text-xs text-cream/50 border-t border-cream/10 mt-auto">
           <p>© {new Date().getFullYear()} {siteProfile.copyrightName}. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:text-cream transition-colors">
