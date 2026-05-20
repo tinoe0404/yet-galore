@@ -25,7 +25,6 @@ interface SnapScrollContainerProps {
 }
 
 
-
 /**
  * Fullscreen vertical snap-scroll container.
  *
