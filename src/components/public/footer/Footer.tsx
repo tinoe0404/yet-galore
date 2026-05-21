@@ -10,8 +10,8 @@ export function Footer() {
       <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col">
         
         <div className="flex-grow flex items-center py-12">
-          {/* 4-column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 w-full">
+          {/* 3-column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-8 w-full">
           
           {/* Column 1 - Brand */}
           <div className="space-y-6">
@@ -20,7 +20,7 @@ export function Footer() {
               Curated luxury essentials for the modern aesthetic.
             </p>
             <p className="font-sans text-sm text-cream/60">
-              Victoria Falls, Zimbabwe
+              Bulawayo, Zimbabwe
             </p>
           </div>
 
@@ -60,38 +60,33 @@ export function Footer() {
                   Shipping & Returns
                 </Link>
               </li>
-              <li>
-                <Link href="/contact" className="text-cream hover:text-white transition-colors duration-200">
+              <li className="space-y-3">
+                <Link href="/contact" className="text-cream hover:text-white transition-colors duration-200 block">
                   Contact
                 </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4 - Connect */}
-          <div className="space-y-6">
-            <h4 className="font-sans text-xs uppercase tracking-widest text-cream/60">Connect</h4>
-            <ul className="space-y-4 font-sans">
-                <li>
-                  <a href={siteProfile.instagram} target="_blank" rel="noreferrer" className="text-cream hover:text-white transition-colors duration-200">
-                    Instagram
-                  </a>
-                </li>
-                <li>
-                  <a href={siteProfile.tiktok} target="_blank" rel="noreferrer" className="text-cream hover:text-white transition-colors duration-200">
-                    TikTok
-                  </a>
-                </li>
-              <li className="pt-2">
-                <a href={siteProfile.whatsapp} target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-cream hover:text-white transition-colors duration-200">
-                  <span>Chat with us</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${siteProfile.email}`} className="text-cream hover:text-white transition-colors duration-200">
-                  {siteProfile.email}
-                </a>
+                <ul className="space-y-3 pl-4 border-l border-cream/20 text-sm">
+                  <li>
+                    <a href={siteProfile.instagram} target="_blank" rel="noreferrer" className="text-cream/80 hover:text-white transition-colors duration-200">
+                      Instagram
+                    </a>
+                  </li>
+                  <li>
+                    <a href={siteProfile.tiktok} target="_blank" rel="noreferrer" className="text-cream/80 hover:text-white transition-colors duration-200">
+                      TikTok
+                    </a>
+                  </li>
+                  <li>
+                    <a href={siteProfile.whatsapp} target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-cream/80 hover:text-white transition-colors duration-200">
+                      <span>Chat with us</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href={`mailto:${siteProfile.email}`} className="text-cream/80 hover:text-white transition-colors duration-200">
+                      {siteProfile.email}
+                    </a>
+                  </li>
+                </ul>
               </li>
             </ul>
           </div>

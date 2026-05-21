@@ -42,16 +42,16 @@ export function AboutClientView() {
             variants={slideInLeft}
             className="w-full md:w-[55%] space-y-8"
           >
-            <Heading>The Origin</Heading>
+            <Heading>About Us</Heading>
             <div className="space-y-6">
               <BodyText className="leading-relaxed">
-                Yet Galore is built on the idea that clothing should carry meaning. Every garment is created with intention, reflecting a process that values time, effort, and authenticity. Based in Victoria Falls, Zimbabwe, the brand draws from the intersection of tourism and local life — where movement, storytelling, and craftsmanship meet.
+                At Yet Galore, we create pieces that carry memory, emotion, and identity. Our work is rooted in storytelling through design, transforming everyday experiences into garments and accessories that feel personal and timeless. Every collection is developed with intention, blending contemporary silhouettes with details that hold meaning and spark connection.
               </BodyText>
               <BodyText className="leading-relaxed">
-                Materials are carefully considered, often repurposed and reworked to give them new life. Through dyeing, layering, and reconstruction, each fabric develops its own character. This commitment to sustainability means garments are not mass-produced but thoughtfully made, carrying the marks of their making.
+                We believe fashion should feel lived in, expressive, and honest. From the textures we choose to the construction of each piece, every element is designed to reflect creativity, individuality, and the beauty found in personal history. Our process is driven by craftsmanship, experimentation, and the desire to create pieces that become part of people’s journeys.
               </BodyText>
               <BodyText className="leading-relaxed">
-                Our work explores the balance between process and product, allowing the journey of creation to exist just as boldly as the final piece.
+                Yet Galore is more than clothing and accessories. It is a growing story about resilience, creativity, and building the future one piece at a time.
               </BodyText>
             </div>
           </motion.div>
